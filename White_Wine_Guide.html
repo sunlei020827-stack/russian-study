@@ -49,4 +49,5 @@ function table(q=''){const found=rows.filter(r=>r.join(' ').toLowerCase().includ
 $('#language').onclick=()=>{const on=document.body.classList.toggle('show-ru');$('#language').setAttribute('aria-pressed',String(on));$('#language').textContent=on?'隐藏俄语':'显示俄语';};
 function beforePrint(){table();}function afterPrint(){table($('#search').value);}window.addEventListener('beforeprint',beforePrint);window.addEventListener('afterprint',afterPrint);$('#print').onclick=()=>window.print();render();table();
 </script>
+<script src="sync.js"></script>
 </body></html>
