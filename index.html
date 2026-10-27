@@ -944,14 +944,11 @@ function markLocalChanged() {
   saveSyncMeta(m);
   safeSet(SYNC_DIRTY_KEY, '1');
   refreshHubMetrics();
-  const cfg = loadSyncCfg();
-  if (cfg.apiKey && cfg.url) {
-    setSyncBadge('dirty', '本地已存 · 准备同步…');
-    clearTimeout(syncDebounce);
-    syncDebounce = setTimeout(() => syncWithCloud('auto'), 1600);
-  } else {
-    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地已自动保存' : '离线背诵中（本地已存）');
-  }
+
+  setSyncBadge(
+    navigator.onLine ? 'dirty' : 'offline',
+    '已保存到本机 · 点击立即同步'
+  );
 }
 
 function collectAllStudyData() {
@@ -1035,6 +1032,9 @@ async function cloudPush(cfg, payload) {
 
 let isSyncing = false;
 async function syncWithCloud(mode) {
+    if (mode !== 'manual' &&
+      mode !== 'force-pull' &&
+      mode !== 'force-push') return;
   const cfg = loadSyncCfg();
   if (!cfg.apiKey || !cfg.url) {
     setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地秒存 · 点击配置云端' : '离线模式 · 本地已保存');
@@ -1119,8 +1119,8 @@ $('cfg-saveBtn').addEventListener('click', () => {
     syncId: $('cfg-syncId').value.trim() || 'my-russian-study'
   };
   saveSyncCfg(cfg);
-  $('cfg-statusMsg').textContent = '配置已保存，正在执行首次同步…';
-  syncWithCloud('manual');
+  $('cfg-statusMsg').textContent =
+    '配置已保存。点击顶部“立即同步”才会连接云端。';
 });
 $('cfg-pullBtn').addEventListener('click', () => syncWithCloud('force-pull'));
 $('cfg-pushBtn').addEventListener('click', () => syncWithCloud('force-push'));
