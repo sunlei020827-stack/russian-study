@@ -88,7 +88,6 @@
 
   // 云端读写适配器（支持 Supabase 数据表 或 JSONBin.io）
   async function fetchRemote(cfg) {
-    if (manualTrigger !== true) return;
     if (!cfg.apiKey) throw new Error('未配置 API Key');
     if (cfg.provider === 'jsonbin') {
       if (!cfg.url) throw new Error('请填写 JSONBin Bin ID');
