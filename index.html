@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>по-русски · 个人俄语云端学习室（支持离线与跨设备同步）</title>
+<style>
+:root {
+  --bg: #f5f4ed;
+  --paper: #fffef9;
+  --panel: #ebece2;
+  --ink: #233d37;
+  --green: #315c4e;
+  --green-soft: #e2ebe6;
+  --muted: #6e776e;
+  --line: #dde1d6;
+  --warn: #965849;
+  --gold: #8c7858;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+/* 顶部全局导航与云端同步状态栏 */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245, 244, 237, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px max(5vw, 18px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--green);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font: 600 18px Georgia, serif;
+}
+.brand-title {
+  font-weight: 650;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+}
+.brand-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 6px;
+}
+.nav-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.nav-btn {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  transition: all .15s;
+}
+.nav-btn:hover {
+  border-color: var(--green);
+}
+.nav-btn[aria-current="page"] {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.sync-Controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 12px;
+  cursor: pointer;
+}
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.sync-dot[data-state="synced"] { background: #2e7d5b; }
+.sync-dot[data-state="syncing"] { background: #2b6cb0; }
+.sync-dot[data-state="dirty"] { background: #d69e2e; }
+.sync-dot[data-state="offline"] { background: #c05621; }
+.sync-dot[data-state="error"] { background: #c53030; }
+
+main {
+  max-width: 1060px;
+  margin: 38px auto 60px;
+  padding: 0 20px;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--green);
+  text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(30px, 4.6vw, 48px);
+  font-weight: 500;
+  letter-spacing: -1.2px;
+  margin: 10px 0 12px;
+  line-height: 1.2;
+}
+h1 em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+p {
+  color: var(--muted);
+  margin: 8px 0 16px;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 9px 15px;
+  transition: border-color .15s, background .15s;
+}
+button:hover { border-color: var(--green); }
+button:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #91ad80;
+  outline-offset: 2px;
+}
+.primary, button[aria-selected="true"] {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.quiet {
+  background: transparent;
+  font-size: 13px;
+}
+.hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* 仪表盘主页卡片网格 */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 28px 0;
+}
+.hub-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+.hub-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 3px 9px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+.hub-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: var(--bg);
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+.hub-metric strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.hub-metric span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 通用卡片与编辑器样式（复刻原工具视觉） */
+.intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.total {
+  min-width: 165px;
+  font-size: 14px;
+}
+.total strong {
+  font-size: 34px;
+  font-weight: 400;
+}
+.bar {
+  height: 5px;
+  background: #e2e5dc;
+  margin-top: 10px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar span {
+  height: 100%;
+  display: block;
+  background: var(--green);
+  transition: width .2s;
+}
+.editor {
+  background: var(--panel);
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+.editor label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+textarea, input[type="text"], input[type="password"], select {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid #cbd3c1;
+  border-radius: 9px;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+}
+textarea {
+  min-height: 130px;
+  resize: vertical;
+  font: 18px/1.65 Georgia, "Times New Roman", serif;
+}
+.actions, .tabs, .rounds {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.actions { margin-top: 12px; }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  margin: 18px 0;
+  padding: 26px;
+}
+.cardhead {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+.title {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.step {
+  background: #edf0e6;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+}
+.sub { font-size: 12px; color: var(--muted); }
+.reading {
+  font: 25px/2.05 Georgia, "Times New Roman", serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 22px 0;
+  color: #253c35;
+}
+.blank {
+  display: inline-block;
+  vertical-align: baseline;
+  min-width: 2.1em;
+  max-width: 100%;
+  padding: 0 .1em;
+  border: 0;
+  border-bottom: 2px solid #7e947c;
+  border-radius: 2px;
+  background: #edf0e6;
+  font: inherit;
+  line-height: 1.3;
+  color: var(--green);
+  white-space: pre;
+}
+.blank[data-open="false"] {
+  color: transparent;
+  user-select: none;
+}
+.blank:hover { background: #e0e7d6; }
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.check[aria-pressed="true"], .round[aria-pressed="true"] {
+  color: #fff;
+  background: var(--green);
+  border-color: var(--green);
+}
+.paragraphEditor {
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+}
+.paragraphEditor:first-child { padding-top: 0; }
+.paragraphEditor:last-child { border-bottom: 0; }
+.paragraphEditor .cnInput {
+  font: 16px/1.7 -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 82px;
+}
+.paragraphToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.translation {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f1f3e9;
+  border-radius: 8px;
+  padding: 14px 17px;
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 18px;
+  color: #5b6c5b;
+}
+.practiceParagraph {
+  padding-top: 10px;
+  border-bottom: 1px solid #eef0e7;
+  margin-bottom: 16px;
+}
+.paraLabel { font-size: 12px; color: var(--muted); }
+.history {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px 0;
+}
+.historyHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+.historyList {
+  max-height: 300px;
+  overflow: auto;
+  margin-top: 12px;
+}
+.historyRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+.historyLoad {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.historyLoad span { display: block; }
+.historyLoad small { display: block; color: var(--muted); margin-top: 4px; }
+.historyDelete { color: var(--warn); }
+.translationToggle { margin: 16px 0; }
+.translationToggle input { width: 17px; height: 17px; vertical-align: middle; margin-right: 7px; }
+
+/* 单词挖空工具专属样式 */
+.switchrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.stats { margin-left: auto; font-size: 13px; }
+.badge { font-size: 12px; color: var(--green); margin-bottom: 4px; }
+.wordlist { margin: 18px 0; }
+.wordrow {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #edf0e6;
+}
+.idx { font-size: 12px; color: #84907d; padding-top: 8px; }
+.spelling { font: 28px/1.9 Georgia, "Times New Roman", serif; overflow-wrap: anywhere; }
+.syllable { display: inline-block; }
+.sep { font-size: 18px; color: #a9afa2; padding: 0 3px; }
+.rounds { padding-top: 16px; border-top: 1px solid var(--line); }
+.toptools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 15px 0; }
+.gloss { font-size: 14px; color: var(--muted); margin: 6px 0; }
+.none { font-size: 12px; color: var(--gold); margin-left: 8px; }
+.historychips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  max-height: 280px;
+  overflow: auto;
+  padding: 2px;
+}
+.historyitem {
+  display: flex;
+  align-items: stretch;
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.historyword {
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.historyword small { display: block; font-size: 12px; color: var(--muted); }
+.historychipdel {
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  padding: 8px 12px;
+  color: var(--warn);
+}
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+
+/* 页内确认条（替代浏览器原生 confirm，兼容所有沙盒与移动端） */
+.confirm-bar {
+  background: #fdf6ec;
+  border: 1px solid #e6cfb3;
+  color: #5c4328;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.step-box {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 12px 0;
+}
+.code-box {
+  background: #1e2d28;
+  color: #e6f0ec;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  overflow-x: auto;
+  white-space: pre;
+  margin: 8px 0;
+}
+footer {
+  text-align: center;
+  padding: 28px 20px;
+  font-size: 12px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  main { margin: 24px auto; padding: 0 14px; }
+  .card, .hub-card, .editor { padding: 18px; }
+  .reading, .spelling { font-size: 22px; }
+  .brand-sub { display: none; }
+}
+@media print {
+  .topbar, .editor, .history, .translationToggle, .tabs, .switchrow, .toptools, footer { display: none !important; }
+  main { margin: 0; max-width: none; }
+  .card { break-inside: avoid; border: 1px solid #aaa; }
+  .blank[data-open="false"], .blank[data-open="true"] { color: transparent !important; }
+}
+</style>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#315c4e"></head>
+<body>
+
+<header class="topbar">
+  <div class="brand-wrap">
+    <div class="logo-mark">Я</div>
+    <div>
+      <span class="brand-title">по-русски · 俄语云端学习室</span>
+      <span class="brand-sub">离线可用 · 多端实时同步</span>
+    </div>
+  </div>
+  <nav class="nav-pills" aria-label="学习工具切换">
+    <button type="button" class="nav-btn" id="nav-hub" aria-current="page">工具箱总览</button>
+    <button type="button" class="nav-btn" id="nav-recite">01 · 俄语背诵室</button>
+    <button type="button" class="nav-btn" id="nav-cloze">02 · 单词挖空练习</button>
+    <button type="button" class="nav-btn" id="nav-cloud">云同步与建站指南</button>
+  </nav>
+  <div class="sync-Controls">
+    <button type="button" class="sync-pill" id="syncStatusBtn" title="点击配置跨设备云同步">
+      <span class="sync-dot" id="syncDot" data-state="local"></span>
+      <span id="syncText">本地秒存 · 未连云端</span>
+    </button>
+    <button type="button" class="quiet" id="syncNowBtn" style="padding:6px 11px">立即同步</button>
+  </div>
+</header>
+
+<main>
+  <!-- 页内安全确认弹窗条（无阻塞） -->
+  <div id="inlineConfirm" class="confirm-bar" hidden>
+    <span id="inlineConfirmMsg">确定执行此操作吗？</span>
+    <div style="display:flex;gap:8px">
+      <button type="button" class="primary" id="inlineConfirmYes" style="padding:6px 13px">确认继续</button>
+      <button type="button" id="inlineConfirmNo" style="padding:6px 13px">取消</button>
+    </div>
+  </div>
+
+  <!-- ==================== 视图 1：工具箱主页 (Hub) ==================== -->
+  <section id="view-hub">
+    <div class="eyebrow">PERSONAL STUDY WORKSPACE · МНОГОУСТРОЙСТВЕННАЯ СИНХРОНИЗАЦИЯ</div>
+    <h1>一套工具，在电脑、平板和手机间<em>无缝接力。</em></h1>
+    <p>你上传的两个俄语工具已完整集成在下方，并接入了<strong>「本地离线优先 + 云端自动同步」</strong>引擎。平时没网也能直接打开背诵，连上 Wi-Fi 后自动把最新词表、最近记录和打勾进度同步到所有设备。</p>
+
+    <div class="hub-grid">
+      <!-- 工具 1 卡片 -->
+      <article class="hub-card">
+        <div>
+          <span class="hub-tag">TOOL 01 · 段落朗读与奇偶挖空</span>
+          <h2>俄语背诵室 · По-русски</h2>
+          <p>先熟读 10 遍，再用奇数词挖空、偶数词挖空各背 5 遍。支持多段输入、中俄对照开关与最近 100 段历史记录。</p>
+        </div>
+        <div>
+          <div class="hub-metrics">
+            <div class="hub-metric"><strong id="hub-rec-done">0 / 20</strong><span>当前勾选遍数</span></div>
+            <div class="hub-metric"><strong id="hub-rec-paras">0 段</strong><span>正在背诵段落</span></div>
+            <div class="hub-metric"><strong id="hub-rec-hist">0 条</strong><span>保存历史段落</span></div>
+          </div>
+          <div class="actions" style="margin-top:16px">
+            <button type="button" class="primary" id="openReciteBtn">进入俄语背诵室 →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 工具 2 卡片 -->
+      <article class="hub-card">
+        <div>
+          <span class="hub-tag">TOOL 02 · 音节与字母七版留白</span>
+          <h2>俄语单词挖空练习 · Слова</h2>
+          <p>按音节奇偶、逐字母奇偶、挖中间、挖前面、挖后面生成 7 个版本，每版 5 遍共 35 遍，专治长难词拼写。</p>
+        </div>
+        <div>
+          <div class="hub-metrics">
+            <div class="hub-metric"><strong id="hub-word-done">0 / 35</strong><span>当前勾选遍数</span></div>
+            <div class="hub-metric"><strong id="hub-word-count">0 词</strong><span>当前练习词数</span></div>
+            <div class="hub-metric"><strong id="hub-word-hist">0 词</strong><span>累计最近单词</span></div>
+          </div>
+          <div class="actions" style="margin-top:16px">
+            <button type="button" class="primary" id="openClozeBtn">进入单词挖空练习 →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 扩展新工具与云端备份卡片 -->
+      <article class="hub-card">
+        <div>
+          <span class="hub-tag">SYNC & EXPANSION · 跨端共享与扩展</span>
+          <h2>连接免费云端 & 添加第 3、4 个工具</h2>
+          <p>已为你打包好独立的 <code>sync.js</code> 和离线 <code>sw.js</code>。你后续现有的或新写的第 3、4 个 HTML 工具，只需加一行脚本就能自动加入同步。</p>
+        </div>
+        <div>
+          <div class="hub-metrics">
+            <div class="hub-metric"><strong id="hub-sync-mode">本地模式</strong><span>当前存储状态</span></div>
+            <div class="hub-metric"><strong id="hub-last-sync">刚刚</strong><span>最近本地更新</span></div>
+            <div class="hub-metric"><strong>PWA 就绪</strong><span>支持断网打开</span></div>
+          </div>
+          <div class="actions" style="margin-top:16px">
+            <button type="button" id="openCloudBtn">配置免费云同步 / 查看教程</button>
+            <button type="button" class="quiet" id="quickExportBtn">一键导出 JSON 备份</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==================== 视图 2：俄语背诵室 (Russian_Recitation) ==================== -->
+  <section id="view-recite" hidden>
+    <div class="intro">
+      <div>
+        <div class="eyebrow">TOOL 01 · 你的每日俄语练习</div>
+        <h1>读十遍，再<em>记住它。</em></h1>
+        <p>先熟读，再用交替挖空唤醒记忆。每完成一遍，为自己打个勾。</p>
+      </div>
+      <div class="total">
+        <strong id="rec-done">0</strong> / 20 遍
+        <div class="bar"><span id="rec-progress"></span></div>
+        <p class="hint" id="rec-saved">进度已保存在本地并与云端关联</p>
+      </div>
+    </div>
+
+    <section class="editor">
+      <div id="rec-paragraphEditors"></div>
+      <div class="actions">
+        <button type="button" class="primary" id="rec-generate">生成练习 / Начать</button>
+        <button type="button" class="quiet" id="rec-addParagraph">＋ 添加一段</button>
+        <button type="button" class="quiet" id="rec-clear">一键清空输入</button>
+        <button type="button" class="quiet" id="rec-saveRecent">保存到最近段落</button>
+        <button type="button" class="quiet" id="rec-example">试用示例</button>
+        <button type="button" class="quiet" id="rec-reset">重置勾选</button>
+        <button type="button" class="quiet" id="rec-print">打印练习</button>
+      </div>
+      <div class="hint" id="rec-notice" role="status" style="margin-top:10px">只计算俄语单词，按整段连续编号；标点、换行保留。点击空白可查看或隐藏一个答案。</div>
+    </section>
+
+    <section class="history">
+      <div class="historyHeader">
+        <h2>最近输入的句子 / 段落</h2>
+        <span class="hint" id="rec-historyCount"></span>
+      </div>
+      <p class="hint">生成练习或点击保存时记录，最多保留 100 段。点击记录重新载入，点击“删除”逐条删除；中文翻译随段落一起跨设备同步保存。</p>
+      <div id="rec-historyList" class="historyList"></div>
+    </section>
+
+    <div class="translationToggle">
+      <label><input type="checkbox" id="rec-showChinese">显示中文翻译 / Показать перевод</label>
+      <span class="hint">默认隐藏；中文不参与俄语单词编号、挖空或次数统计。</span>
+    </div>
+
+    <div id="rec-practice"></div>
+  </section>
+
+  <!-- ==================== 视图 3：俄语单词挖空练习 (Russian_WordCloze) ==================== -->
+  <section id="view-cloze" hidden>
+    <div class="eyebrow">TOOL 02 · RUSSIAN WORD PRACTICE</div>
+    <h1>换一种留白，<em>记住每个词。</em></h1>
+    <p>音节、逐字母各分奇偶两版；中间、前面、后面整块挖空。每版五遍。</p>
+
+    <section class="editor">
+      <label for="wc-input">输入俄语单词，每行一个 / По одному слову в строке</label>
+      <textarea id="wc-input" spellcheck="false" placeholder="ви/но | 葡萄酒&#10;мо/ло/ко | 牛奶&#10;виноград | 葡萄"></textarea>
+      <div class="hint" style="margin-top:8px">可在单词后用 | 添加中文释义。用 / 指定音节，例如 мо/ло/ко；不加 / 时采用近似自动划分，请检查。连字符保留，不计入字母编号；重音符号跟随字母。</div>
+      <div class="actions">
+        <button type="button" id="wc-generate" class="primary">生成七个版本</button>
+        <button type="button" id="wc-clear">一键清空输入框</button>
+        <button type="button" id="wc-saveRecent">保存到最近单词</button>
+        <button type="button" id="wc-example">载入示例</button>
+        <button type="button" id="wc-reset">重置全部勾选</button>
+        <button type="button" id="wc-print">打印七个版本</button>
+      </div>
+      <div id="wc-status" class="hint" role="status" style="margin-top:8px">单词、勾选进度自动保存在当前设备并支持跨设备云同步。</div>
+    </section>
+
+    <section class="history" aria-label="最近输入的单词">
+      <div class="historyHeader">
+        <h2>最近输入 / Недавние слова</h2>
+        <span id="wc-historyCount" class="hint"></span>
+      </div>
+      <p class="hint">点击单词加入输入框，点击右侧 × 逐个删除记录。保存最近 100 个不同单词；生成练习或离开输入框时自动记录。</p>
+      <div id="wc-historyList" class="historychips"></div>
+    </section>
+
+    <details id="wc-review" hidden>
+      <summary style="cursor:pointer;font-weight:600">核对原词与音节 / Проверить слова и слоги</summary>
+      <div id="wc-original" lang="ru" style="white-space:pre-wrap;font:19px/1.8 Georgia,serif;padding:16px;background:var(--paper);border-radius:10px;margin-top:10px;border:1px solid var(--line)"></div>
+      <p class="hint">自动音节仅供拼写记忆，不等于严格的音节学分析或俄语移行规则。如划分不合适，在输入框用 / 修改后重新生成。</p>
+    </details>
+
+    <div class="tabs" id="wc-modes" role="tablist" aria-label="挖空方式" style="margin-top:20px"></div>
+    <div class="switchrow" id="wc-controls" hidden>
+      <div class="tabs" id="wc-parities" role="tablist" aria-label="奇偶版本"></div>
+      <div class="stats" id="wc-stats" aria-live="polite"></div>
+    </div>
+    <div class="toptools" id="wc-tools" hidden>
+      <button type="button" id="wc-reveal">查看本版答案</button>
+      <label style="margin:0;font-size:13px;font-weight:400">释义
+        <select id="wc-gloss" style="width:auto;padding:6px 10px">
+          <option value="show">显示</option>
+          <option value="hide">隐藏</option>
+        </select>
+      </label>
+      <span class="hint">音节和逐字母模式分奇偶；其余三种模式整块隐藏，不分奇偶。</span>
+    </div>
+    <div id="wc-cards"></div>
+  </section>
+
+  <!-- ==================== 视图 4：云端同步设置与三步上线指南 ==================== -->
+  <section id="view-cloud" hidden>
+    <div class="eyebrow">CLOUD SYNC & OFFLINE PWA SETUP</div>
+    <h1>跨设备自动同步设置 & <em>免费上线指南</em></h1>
+    <p>在下方填入免费的云存储参数，你的电脑、手机、平板就会共享同一份学习进度。平时断网也能照常背诵，联网后自动补传。</p>
+
+    <div class="card">
+      <h2>第一步：配置你的个人云端同步钥匙（所有设备填同一组即可）</h2>
+      <p class="hint">推荐使用完全免费的 <strong>JSONBin.io</strong>（最快，无需建表，30 秒搞定）或 <strong>Supabase</strong>。</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px">
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px">选择免费云服务类型</label>
+          <select id="cfg-provider">
+            <option value="jsonbin">JSONBin.io（极简免建表 · 推荐个人使用）</option>
+            <option value="supabase">Supabase 数据表（适合高频大数据量）</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px">你的专属同步暗号（Sync ID）</label>
+          <input type="text" id="cfg-syncId" placeholder="my-russian-study">
+        </div>
+      </div>
+
+      <div style="margin-top:14px">
+        <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px">云端地址 / Bin ID（JSONBin 填 Bin ID；Supabase 填 Project URL）</label>
+        <input type="text" id="cfg-url" placeholder="例如：671f9c2a... 或 https://xxxx.supabase.co">
+      </div>
+
+      <div style="margin-top:14px">
+        <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px">访问密钥 API Key（JSONBin 填 X-Master-Key；Supabase 填 anon public key）</label>
+        <input type="password" id="cfg-apiKey" placeholder="粘贴你的免费密钥（仅保存在你自己的设备本地）">
+      </div>
+
+      <div class="actions" style="margin-top:18px">
+        <button type="button" class="primary" id="cfg-saveBtn">保存配置并立即同步</button>
+        <button type="button" id="cfg-pullBtn">从云端拉取覆盖本地</button>
+        <button type="button" id="cfg-pushBtn">强制把本机进度推上云端</button>
+        <button type="button" class="quiet" id="cfg-exportBtn">导出本地备份 (.json)</button>
+        <label style="cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:9px 14px;background:var(--paper);font-size:13px">
+          从备份文件恢复 <input type="file" id="cfg-importInput" accept=".json" style="display:none">
+        </label>
+      </div>
+      <div id="cfg-statusMsg" class="hint" style="margin-top:10px;color:var(--green)"></div>
+    </div>
+
+    <div class="card">
+      <h2>第二步：如何花 3 分钟完全免费获取上面的钥匙？</h2>
+      <div class="step-box">
+        <strong>方式 A：用 JSONBin.io（最简单，不用敲任何代码）</strong>
+        <ol style="margin:8px 0 0;padding-left:20px;color:var(--ink);font-size:14px">
+          <li>打开 <code>https://jsonbin.io</code> 用 GitHub 或谷歌账号免费登录。</li>
+          <li>在首页编辑器里随便写一个 <code>{"init": true}</code>，点击 <strong>Save / Create Bin</strong>，复制生成的 <strong>Bin ID</strong>（一串字母数字，填到上方“云端地址 / Bin ID”）。</li>
+          <li>点击左侧菜单 <strong>API Keys</strong>，复制你的 <strong>X-Master-Key</strong>，填到上方“访问密钥 API Key”，点保存就完成了！</li>
+        </ol>
+      </div>
+      <div class="step-box">
+        <strong>方式 B：用 Supabase（专业级免费云数据库）</strong>
+        <ol style="margin:8px 0 0;padding-left:20px;color:var(--ink);font-size:14px">
+          <li>打开 <code>https://supabase.com</code> 免费创建一个新项目，在左侧 <strong>SQL Editor</strong> 运行下面这三行建表语句：</li>
+        </ol>
+        <div class="code-box">create table if not exists study_sync (
+  id text primary key,
+  payload jsonb not null default '{}'::jsonb
+);
+alter table study_sync enable row level security;
+create policy "allow_all_sync" on study_sync for all using (true) with check (true);</div>
+        <div class="hint">然后在 Supabase 的 <strong>Project Settings → API</strong> 中复制 <code>Project URL</code> 和 <code>anon public key</code> 填入上方即可。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>第三步：如何把你的第 3、4 个以及未来的新 HTML 工具加进来？</h2>
+      <p>我已经为你生成了完整的网站压缩包（<code>Russian_Study_Cloud_Package.zip</code>）。你可以直接把解压后的文件夹上传到 <strong>Cloudflare Pages</strong>、<strong>Vercel</strong> 或 <strong>GitHub Pages</strong>（统统免费）：</p>
+      <div class="step-box">
+        <strong>以后每当你制作了一个新的 HTML 学习工具（比如 <code>Russian_Grammar.html</code>）：</strong>
+        <ol style="margin:8px 0 0;padding-left:20px;color:var(--ink);font-size:14px">
+          <li>把新的 <code>.html</code> 文件丢进同一个文件夹里。</li>
+          <li>打开那个 HTML 文件，在最底部的 <code>&lt;/body&gt;</code> 前面加上这一行代码：</li>
+        </ol>
+        <div class="code-box">&lt;script src="sync.js"&gt;&lt;/script&gt;</div>
+        <div class="hint">只要你的新工具也是用 <code>localStorage</code> 保存数据的（键名以 <code>neo-</code>、<code>ru-</code> 或 <code>study-</code> 开头），<code>sync.js</code> 就会自动拦截它的每一次保存并实时同步到云端，完全不需要改写你新工具里的业务逻辑！</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  一点一点，记得更牢。 / Шаг за шагом, каждое повторение помогает.
+</footer>
+
+<script>
+// ============================================================================
+// 通用工具函数与非阻塞确认框（替代原生 confirm，兼容所有环境）
+// ============================================================================
+const $ = id => document.getElementById(id);
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+let pendingConfirmAction = null;
+function askConfirm(message, onYes) {
+  $('inlineConfirmMsg').textContent = message;
+  $('inlineConfirm').hidden = false;
+  pendingConfirmAction = onYes;
+  $('inlineConfirm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+$('inlineConfirmYes').addEventListener('click', () => {
+  $('inlineConfirm').hidden = true;
+  if (typeof pendingConfirmAction === 'function') {
+    const fn = pendingConfirmAction;
+    pendingConfirmAction = null;
+    fn();
+  }
+});
+$('inlineConfirmNo').addEventListener('click', () => {
+  $('inlineConfirm').hidden = true;
+  pendingConfirmAction = null;
+});
+
+// ============================================================================
+// 视图路由切换
+// ============================================================================
+const VIEWS = ['hub', 'recite', 'cloze', 'cloud'];
+function switchView(target) {
+  $('inlineConfirm').hidden = true;
+  VIEWS.forEach(v => {
+    $('view-' + v).hidden = (v !== target);
+    const btn = $('nav-' + v);
+    if (btn) {
+      if (v === target) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    }
+  });
+  if (target === 'hub') refreshHubMetrics();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+$('nav-hub').addEventListener('click', () => switchView('hub'));
+$('nav-recite').addEventListener('click', () => switchView('recite'));
+$('nav-cloze').addEventListener('click', () => switchView('cloze'));
+$('nav-cloud').addEventListener('click', () => switchView('cloud'));
+$('openReciteBtn').addEventListener('click', () => switchView('recite'));
+$('openClozeBtn').addEventListener('click', () => switchView('cloze'));
+$('openCloudBtn').addEventListener('click', () => switchView('cloud'));
+$('syncStatusBtn').addEventListener('click', () => switchView('cloud'));
+
+// ============================================================================
+// 云端同步与离线优先存储引擎 (Offline-first LocalStorage + Cloud Sync)
+// ============================================================================
+const SYNC_CFG_KEY = 'ru_study_sync_config_v1';
+const SYNC_META_KEY = 'ru_study_sync_meta_v1';
+const SYNC_DIRTY_KEY = 'ru_study_sync_dirty_v1';
+
+const MANAGED_KEYS = [
+  'neo-russian-recall-v1',
+  'neo-russian-recall-v1-history',
+  'neo-russian-recall-v1-draft',
+  'neo-word-cloze-v1',
+  'neo-word-cloze-v1-history',
+  'neo-word-cloze-v1-draft'
+];
+
+function safeGet(k) {
+  try { return localStorage.getItem(k); } catch { return null; }
+}
+function safeSet(k, v) {
+  try { localStorage.setItem(k, v); return true; } catch { return false; }
+}
+
+function loadSyncCfg() {
+  try {
+    return JSON.parse(safeGet(SYNC_CFG_KEY)) || { provider: 'jsonbin', url: '', apiKey: '', syncId: 'my-russian-study' };
+  } catch {
+    return { provider: 'jsonbin', url: '', apiKey: '', syncId: 'my-russian-study' };
+  }
+}
+function saveSyncCfg(cfg) {
+  safeSet(SYNC_CFG_KEY, JSON.stringify(cfg));
+}
+function loadSyncMeta() {
+  try {
+    return JSON.parse(safeGet(SYNC_META_KEY)) || { updatedAt: 0, lastSyncAt: 0 };
+  } catch {
+    return { updatedAt: 0, lastSyncAt: 0 };
+  }
+}
+function saveSyncMeta(m) {
+  safeSet(SYNC_META_KEY, JSON.stringify(m));
+}
+
+let syncDebounce = null;
+function markLocalChanged() {
+  const m = loadSyncMeta();
+  m.updatedAt = Date.now();
+  saveSyncMeta(m);
+  safeSet(SYNC_DIRTY_KEY, '1');
+  refreshHubMetrics();
+  const cfg = loadSyncCfg();
+  if (cfg.apiKey && cfg.url) {
+    setSyncBadge('dirty', '本地已存 · 准备同步…');
+    clearTimeout(syncDebounce);
+    syncDebounce = setTimeout(() => syncWithCloud('auto'), 1600);
+  } else {
+    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地已自动保存' : '离线背诵中（本地已存）');
+  }
+}
+
+function collectAllStudyData() {
+  const out = {};
+  MANAGED_KEYS.forEach(k => {
+    const val = safeGet(k);
+    if (val !== null) out[k] = val;
+  });
+  return out;
+}
+
+function applyAllStudyData(dataObj) {
+  if (!dataObj || typeof dataObj !== 'object') return;
+  Object.entries(dataObj).forEach(([k, v]) => {
+    if (MANAGED_KEYS.includes(k) && typeof v === 'string') {
+      safeSet(k, v);
+    }
+  });
+  reloadReciteFromStorage();
+  reloadClozeFromStorage();
+  refreshHubMetrics();
+}
+
+function setSyncBadge(state, text) {
+  $('syncDot').dataset.state = state;
+  $('syncText').textContent = text;
+}
+
+async function cloudPull(cfg) {
+  if (cfg.provider === 'jsonbin') {
+    const binId = cfg.url.trim().replace(/^https?:\/\/[^/]+\/v3\/b\//, '');
+    const res = await fetch('https://api.jsonbin.io/v3/b/' + encodeURIComponent(binId) + '/latest', {
+      headers: { 'X-Master-Key': cfg.apiKey.trim() }
+    });
+    if (!res.ok) throw new Error('云端读取返回 ' + res.status);
+    const j = await res.json();
+    return j.record || { updatedAt: 0, data: {} };
+  } else {
+    const base = cfg.url.trim().replace(/\/+$/, '');
+    const sid = (cfg.syncId || 'my-russian-study').trim();
+    const res = await fetch(base + '/rest/v1/study_sync?id=eq.' + encodeURIComponent(sid) + '&select=payload', {
+      headers: {
+        'apikey': cfg.apiKey.trim(),
+        'Authorization': 'Bearer ' + cfg.apiKey.trim()
+      }
+    });
+    if (!res.ok) throw new Error('Supabase 读取返回 ' + res.status);
+    const rows = await res.json();
+    return (rows.length && rows[0].payload) ? rows[0].payload : { updatedAt: 0, data: {} };
+  }
+}
+
+async function cloudPush(cfg, payload) {
+  if (cfg.provider === 'jsonbin') {
+    const binId = cfg.url.trim().replace(/^https?:\/\/[^/]+\/v3\/b\//, '');
+    const res = await fetch('https://api.jsonbin.io/v3/b/' + encodeURIComponent(binId), {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': cfg.apiKey.trim()
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('JSONBin 写入返回 ' + res.status);
+  } else {
+    const base = cfg.url.trim().replace(/\/+$/, '');
+    const sid = (cfg.syncId || 'my-russian-study').trim();
+    const res = await fetch(base + '/rest/v1/study_sync', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': cfg.apiKey.trim(),
+        'Authorization': 'Bearer ' + cfg.apiKey.trim(),
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ id: sid, payload: payload })
+    });
+    if (!res.ok) throw new Error('Supabase 写入返回 ' + res.status);
+  }
+}
+
+let isSyncing = false;
+async function syncWithCloud(mode) {
+  const cfg = loadSyncCfg();
+  if (!cfg.apiKey || !cfg.url) {
+    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地秒存 · 点击配置云端' : '离线模式 · 本地已保存');
+    if (mode === 'manual') {
+      switchView('cloud');
+      $('cfg-statusMsg').textContent = '请先在下方填写你的免费云端 Bin ID / URL 与 API Key。';
+    }
+    return;
+  }
+  if (!navigator.onLine) {
+    setSyncBadge('offline', '当前无网 · 联网后自动补传');
+    return;
+  }
+  if (isSyncing) return;
+  isSyncing = true;
+  setSyncBadge('syncing', '正在同步云端进度…');
+  try {
+    const meta = loadSyncMeta();
+    const localData = collectAllStudyData();
+
+    if (mode === 'force-push') {
+      const now = Date.now();
+      await cloudPush(cfg, { updatedAt: now, data: localData });
+      meta.updatedAt = now;
+      meta.lastSyncAt = now;
+      saveSyncMeta(meta);
+      safeSet(SYNC_DIRTY_KEY, '0');
+      setSyncBadge('synced', '云端已同步 · 刚刚推送');
+      $('cfg-statusMsg').textContent = '已成功将当前设备的全部进度推送到云端！';
+      return;
+    }
+
+    const remote = await cloudPull(cfg);
+    const remoteTime = Number(remote.updatedAt || 0);
+    const localTime = Number(meta.updatedAt || 0);
+
+    if (mode === 'force-pull' || (remoteTime > localTime && safeGet(SYNC_DIRTY_KEY) !== '1')) {
+      const merged = Object.assign({}, localData, remote.data || {});
+      applyAllStudyData(merged);
+      meta.updatedAt = Math.max(remoteTime, Date.now());
+      meta.lastSyncAt = Date.now();
+      saveSyncMeta(meta);
+      safeSet(SYNC_DIRTY_KEY, '0');
+      setSyncBadge('synced', '已从云端更新最新进度');
+      $('cfg-statusMsg').textContent = '已从云端拉取最新学习进度并更新到页面！';
+    } else {
+      const now = Math.max(localTime, Date.now());
+      const merged = Object.assign({}, remote.data || {}, localData);
+      await cloudPush(cfg, { updatedAt: now, data: merged });
+      applyAllStudyData(merged);
+      meta.updatedAt = now;
+      meta.lastSyncAt = Date.now();
+      saveSyncMeta(meta);
+      safeSet(SYNC_DIRTY_KEY, '0');
+      setSyncBadge('synced', '云端已同步 · 多端一致');
+      $('cfg-statusMsg').textContent = '双向合并同步成功！所有设备现已保持最新进度。';
+    }
+  } catch (e) {
+    setSyncBadge('error', '同步待重试');
+    $('cfg-statusMsg').textContent = '同步遇到问题：' + e.message + '（你的本地进度完好无损）';
+  } finally {
+    isSyncing = false;
+    refreshHubMetrics();
+  }
+}
+
+$('syncNowBtn').addEventListener('click', () => syncWithCloud('manual'));
+
+// 绑定云设置表单
+function initCloudForm() {
+  const cfg = loadSyncCfg();
+  $('cfg-provider').value = cfg.provider || 'jsonbin';
+  $('cfg-url').value = cfg.url || '';
+  $('cfg-apiKey').value = cfg.apiKey || '';
+  $('cfg-syncId').value = cfg.syncId || 'my-russian-study';
+}
+$('cfg-saveBtn').addEventListener('click', () => {
+  const cfg = {
+    provider: $('cfg-provider').value,
+    url: $('cfg-url').value.trim(),
+    apiKey: $('cfg-apiKey').value.trim(),
+    syncId: $('cfg-syncId').value.trim() || 'my-russian-study'
+  };
+  saveSyncCfg(cfg);
+  $('cfg-statusMsg').textContent = '配置已保存，正在执行首次同步…';
+  syncWithCloud('manual');
+});
+$('cfg-pullBtn').addEventListener('click', () => syncWithCloud('force-pull'));
+$('cfg-pushBtn').addEventListener('click', () => syncWithCloud('force-push'));
+
+function exportBackupJson() {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    updatedAt: Date.now(),
+    data: collectAllStudyData()
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'russian-study-backup.json';
+  a.click();
+}
+$('cfg-exportBtn').addEventListener('click', exportBackupJson);
+$('quickExportBtn').addEventListener('click', exportBackupJson);
+$('cfg-importInput').addEventListener('change', e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      applyAllStudyData(parsed.data || parsed);
+      markLocalChanged();
+      $('cfg-statusMsg').textContent = '备份导入成功！两个工具的进度与历史记录已全部恢复。';
+    } catch {
+      $('cfg-statusMsg').textContent = '导入失败：请确认选择的是有效的 .json 备份文件。';
+    }
+  };
+  reader.readAsText(file);
+});
+
+window.addEventListener('online', () => syncWithCloud('auto'));
+window.addEventListener('offline', () => setSyncBadge('offline', '离线背诵中（联网自动同步）'));
+
+// ============================================================================
+// 工具 01：俄语背诵室 (Russian_Recitation) 完整逻辑
+// ============================================================================
+(function initRecitationTool(){
+  const KEY = 'neo-russian-recall-v1', HISTORY_KEY = KEY + '-history', DRAFT_KEY = KEY + '-draft';
+  const wordPattern = /[А-Яа-яЁё]+(?:[\u0300\u0301\u0341]*[А-Яа-яЁё]+)*(?:[\u0300\u0301\u0341]*)(?:[-‑][А-Яа-яЁё]+(?:[\u0300\u0301\u0341]*[А-Яа-яЁё]+)*[\u0300\u0301\u0341]*)*/gu;
+  const freshChecks = () => [Array(10).fill(false), Array(5).fill(false), Array(5).fill(false)];
+  function hasRussian(s) { return (s.match(wordPattern) || []).length > 0; }
+  function cleanParagraphs(a) {
+    return Array.isArray(a) ? a.filter(p => p && typeof p.ru === 'string').map(p => ({ ru: p.ru, zh: typeof p.zh === 'string' ? p.zh : '' })) : [];
+  }
+  function normalizeRu(s) { return s.trim().replace(/\s+/g, ' '); }
+
+  let state = { text: '', paragraphs: [], checks: freshChecks() };
+  let draft = [{ ru: '', zh: '' }];
+  let recent = [];
+
+  function loadFromStorage() {
+    state = { text: '', paragraphs: [], checks: freshChecks() };
+    draft = [{ ru: '', zh: '' }];
+    recent = [];
+    try {
+      const s = JSON.parse(safeGet(KEY));
+      if (s && typeof s.text === 'string' && Array.isArray(s.checks) && s.checks.length === 3 && [10, 5, 5].every((n, i) => Array.isArray(s.checks[i]) && s.checks[i].length === n)) {
+        state = { text: s.text, paragraphs: cleanParagraphs(s.paragraphs), checks: s.checks.map(a => a.map(Boolean)) };
+        if (!state.paragraphs.length && s.text) state.paragraphs = [{ ru: s.text, zh: '' }];
+      }
+    } catch {}
+    draft = state.paragraphs.length ? state.paragraphs.map(p => ({ ...p })) : draft;
+    try {
+      const d = JSON.parse(safeGet(DRAFT_KEY));
+      if (Array.isArray(d) && d.length) {
+        const a = cleanParagraphs(d);
+        if (a.length) draft = a;
+      }
+    } catch {}
+    try {
+      const raw = safeGet(HISTORY_KEY);
+      if (raw === null || raw === undefined) recent = state.paragraphs.map(p => ({ ...p }));
+      else recent = cleanParagraphs(JSON.parse(raw));
+      const seen = new Set();
+      recent = recent.filter(p => {
+        const k = normalizeRu(p.ru);
+        if (!hasRussian(p.ru) || seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      }).slice(0, 100);
+    } catch {}
+  }
+
+  function write(key, value) {
+    if (safeSet(key, JSON.stringify(value))) {
+      markLocalChanged();
+      return true;
+    }
+    $('rec-saved').textContent = '浏览器未允许保存，请保持页面打开';
+    return false;
+  }
+  function save() {
+    if (write(KEY, state)) $('rec-saved').textContent = '进度已保存在本地并与云端关联';
+  }
+  function saveDraft() { return write(DRAFT_KEY, draft); }
+  function inputChanged(i, field, value) { draft[i][field] = value; saveDraft(); }
+
+  function renderEditors() {
+    const host = $('rec-paragraphEditors');
+    host.replaceChildren();
+    draft.forEach((p, i) => {
+      const box = el('div', 'paragraphEditor'), bar = el('div', 'paragraphToolbar');
+      bar.append(el('strong', '', '第 ' + (i + 1) + ' 段 / Абзац ' + (i + 1)));
+      if (draft.length > 1) {
+        const del = el('button', 'quiet', '移除这段输入');
+        del.type = 'button';
+        del.onclick = () => {
+          const doRemove = () => { draft.splice(i, 1); saveDraft(); renderEditors(); };
+          if (draft[i].ru.trim() || draft[i].zh.trim()) askConfirm('移除这段输入？最近记录和已生成练习保留。', doRemove);
+          else doRemove();
+        };
+        bar.append(del);
+      }
+      const ruLabel = el('label', '', '俄语 / Русский'), ru = el('textarea', 'ruInput');
+      const cnLabel = el('label', '', '中文翻译（选填）/ Китайский перевод'), cn = el('textarea', 'cnInput');
+      ru.id = 'rec-source-' + i;
+      ruLabel.setAttribute('for', ru.id);
+      ru.lang = 'ru';
+      ru.spellcheck = false;
+      ru.value = p.ru;
+      ru.placeholder = '在这里粘贴这一段俄语……';
+      ru.oninput = () => inputChanged(i, 'ru', ru.value);
+
+      cn.id = 'rec-chinese-' + i;
+      cnLabel.setAttribute('for', cn.id);
+      cn.lang = 'zh-CN';
+      cn.value = p.zh;
+      cn.placeholder = '在这里填写这一段的中文；不会参与挖空和计数。';
+      cn.oninput = () => inputChanged(i, 'zh', cn.value);
+
+      box.append(bar, ruLabel, ru, cnLabel, cn);
+      host.append(box);
+    });
+  }
+
+  function renderRecent() {
+    const host = $('rec-historyList');
+    host.replaceChildren();
+    $('rec-historyCount').textContent = recent.length + ' / 100';
+    if (!recent.length) {
+      host.append(el('p', 'hint', '还没有最近记录。输入俄语后点击生成或保存。'));
+      return;
+    }
+    recent.forEach((p, i) => {
+      const row = el('div', 'historyRow'), load = el('button', 'historyLoad'), del = el('button', 'historyDelete', '删除');
+      load.type = 'button';
+      del.type = 'button';
+      load.append(el('span', '', p.ru));
+      if (p.zh) load.append(el('small', '', p.zh));
+      load.setAttribute('aria-label', '载入最近段落 ' + (i + 1));
+      load.onclick = () => {
+        const doLoad = () => {
+          draft = [{ ...p }];
+          saveDraft();
+          renderEditors();
+          $('rec-notice').textContent = '已载入俄语和中文，点击“生成练习”开始背诵。';
+        };
+        if (draft.some(x => x.ru.trim() || x.zh.trim())) askConfirm('用这条记录替换输入框？当前已生成练习保留，点击生成后才会更新。', doLoad);
+        else doLoad();
+      };
+      del.setAttribute('aria-label', '删除第 ' + (i + 1) + ' 条最近段落记录');
+      del.onclick = () => {
+        recent.splice(i, 1);
+        const ok = write(HISTORY_KEY, recent);
+        renderRecent();
+        $('rec-notice').textContent = ok ? '已删除这条最近记录。' : '已从本次列表移除。';
+      };
+      row.append(load, del);
+      host.append(row);
+    });
+  }
+
+  function remember(paragraphs) {
+    for (const p of paragraphs) {
+      const key = normalizeRu(p.ru);
+      recent = recent.filter(x => normalizeRu(x.ru) !== key);
+      recent.unshift({ ...p });
+    }
+    recent = recent.slice(0, 100);
+    const ok = write(HISTORY_KEY, recent);
+    renderRecent();
+    return ok;
+  }
+
+  function validDraft() {
+    const out = [];
+    for (let i = 0; i < draft.length; i++) {
+      const p = { ru: draft[i].ru.trim(), zh: draft[i].zh.trim() };
+      if (!p.ru && !p.zh) continue;
+      if (!hasRussian(p.ru)) throw Error('第 ' + (i + 1) + ' 段请先输入有效的俄语；中文放在独立翻译框。');
+      out.push(p);
+    }
+    if (!out.length) throw Error('请先输入至少一段俄语。');
+    return out;
+  }
+
+  function summary() {
+    const n = state.checks.flat().filter(Boolean).length;
+    $('rec-done').textContent = n;
+    $('rec-progress').style.width = (n * 5) + '%';
+  }
+
+  function setBlank(b, open) {
+    b.dataset.open = String(open);
+    b.setAttribute('aria-pressed', String(open));
+    b.setAttribute('aria-label', open ? b.textContent + '，点击隐藏' : '第 ' + b.dataset.index + ' 个俄语单词，点击查看答案');
+  }
+
+  function render() {
+    const host = $('rec-practice');
+    host.replaceChildren();
+    summary();
+    if (!state.paragraphs.length) {
+      host.append(el('div', 'empty', '粘贴俄语并填写可选的中文翻译，开始今天的 20 遍练习。'));
+      return;
+    }
+    const titles = ['看原文 · 朗读十遍', '奇数单词挖空 · 背诵五遍', '偶数单词挖空 · 背诵五遍'];
+    const subs = ['Чтение · 10 раз', '隐藏第 1、3、5… 个俄语单词', '隐藏第 2、4、6… 个俄语单词'];
+    for (let k = 0; k < 3; k++) {
+      const card = el('section', 'card'), head = el('div', 'cardhead'), title = el('div', 'title'), name = el('div');
+      name.append(el('h2', '', titles[k]), el('div', 'sub', subs[k]));
+      title.append(el('span', 'step', '0' + (k + 1)), name);
+      const count = el('span', 'count');
+      const update = () => count.textContent = state.checks[k].filter(Boolean).length + ' / ' + state.checks[k].length + ' 遍';
+      update();
+      head.append(title, count);
+      card.append(head);
+      let index = 0;
+      state.paragraphs.forEach((p, i) => {
+        const group = el('div', 'practiceParagraph'), reading = el('div', 'reading');
+        reading.lang = 'ru';
+        group.append(el('div', 'paraLabel', '第 ' + (i + 1) + ' 段'));
+        let pos = 0;
+        for (const m of p.ru.matchAll(wordPattern)) {
+          reading.append(document.createTextNode(p.ru.slice(pos, m.index)));
+          index++;
+          if (k > 0 && index % 2 === (k === 1 ? 1 : 0)) {
+            const b = el('button', 'blank', m[0]);
+            b.type = 'button';
+            b.dataset.index = index;
+            setBlank(b, false);
+            b.onclick = () => setBlank(b, b.dataset.open !== 'true');
+            reading.append(b);
+          } else {
+            reading.append(document.createTextNode(m[0]));
+          }
+          pos = m.index + m[0].length;
+        }
+        reading.append(document.createTextNode(p.ru.slice(pos)));
+        group.append(reading);
+        if (p.zh) {
+          const cn = el('div', 'translation', p.zh);
+          cn.lang = 'zh-CN';
+          cn.hidden = !$('rec-showChinese').checked;
+          group.append(cn);
+        }
+        card.append(group);
+      });
+      if (k) {
+        const reveal = el('button', 'quiet reveal', '查看全部答案 / Показать ответы');
+        reveal.type = 'button';
+        let shown = false;
+        reveal.onclick = () => {
+          shown = !shown;
+          card.querySelectorAll('.blank').forEach(b => setBlank(b, shown));
+          reveal.textContent = shown ? '重新挖空 / Скрыть ответы' : '查看全部答案 / Показать ответы';
+        };
+        card.append(reveal);
+      }
+      const checks = el('div', 'checks');
+      state.checks[k].forEach((v, i) => {
+        const b = el('button', 'check');
+        b.type = 'button';
+        function label() {
+          b.textContent = (state.checks[k][i] ? '✓' : '□') + ' 第 ' + (i + 1) + ' 遍';
+          b.setAttribute('aria-pressed', String(state.checks[k][i]));
+          b.setAttribute('aria-label', titles[k] + '，第 ' + (i + 1) + ' 遍');
+        }
+        label();
+        b.onclick = () => {
+          state.checks[k][i] = !state.checks[k][i];
+          label();
+          update();
+          summary();
+          save();
+        };
+        checks.append(b);
+      });
+      card.append(checks);
+      host.append(card);
+    }
+  }
+
+  function applyGenerate(paragraphs) {
+    const text = paragraphs.map(p => p.ru).join('\n\n');
+    if (text !== state.text) state.checks = freshChecks();
+    state.text = text;
+    state.paragraphs = paragraphs;
+    saveDraft();
+    save();
+    const ok = remember(paragraphs);
+    render();
+    $('rec-notice').textContent = ok ? '练习已生成并保存到最近段落。俄语连续编号；中文仅作为可隐藏的翻译。' : '练习已生成。';
+  }
+
+  function generate() {
+    let paragraphs;
+    try { paragraphs = validDraft(); } catch (e) { $('rec-notice').textContent = e.message; return; }
+    const text = paragraphs.map(p => p.ru).join('\n\n');
+    if (text !== state.text && state.checks.flat().some(Boolean)) {
+      askConfirm('更换俄语内容会清空当前勾选进度，继续吗？', () => applyGenerate(paragraphs));
+      return;
+    }
+    applyGenerate(paragraphs);
+  }
+
+  $('rec-generate').onclick = generate;
+  $('rec-addParagraph').onclick = () => { draft.push({ ru: '', zh: '' }); saveDraft(); renderEditors(); };
+  $('rec-clear').onclick = () => {
+    draft = [{ ru: '', zh: '' }];
+    saveDraft();
+    renderEditors();
+    $('rec-notice').textContent = '俄语和中文输入框已清空。最近记录、已生成练习和勾选进度保留。';
+  };
+  $('rec-saveRecent').onclick = () => {
+    try {
+      const paragraphs = validDraft();
+      saveDraft();
+      if (remember(paragraphs)) $('rec-notice').textContent = '已保存 ' + paragraphs.length + ' 段俄语及对应中文。';
+    } catch (e) { $('rec-notice').textContent = e.message; }
+  };
+  $('rec-showChinese').checked = false;
+  $('rec-showChinese').onchange = () => {
+    $('view-recite').querySelectorAll('.translation').forEach(c => c.hidden = !$('rec-showChinese').checked);
+  };
+  $('rec-example').onclick = () => {
+    draft = [
+      { ru: 'Во время практики на винодельне я изучал процесс производства вина.', zh: '在酒厂实习期间，我学习了葡萄酒的生产过程。' },
+      { ru: 'Я наблюдал за приёмкой винограда, прессованием и брожением.', zh: '我观察了葡萄接收、压榨和发酵。' }
+    ];
+    renderEditors();
+    applyGenerate(draft.map(p => ({ ...p })));
+  };
+  $('rec-reset').onclick = () => {
+    if (state.checks.flat().some(Boolean)) {
+      askConfirm('清空全部勾选进度？俄语、中文和最近记录保留。', () => {
+        state.checks = freshChecks();
+        save();
+        render();
+      });
+    }
+  };
+  $('rec-print').onclick = () => window.print();
+
+  window.reloadReciteFromStorage = function() {
+    loadFromStorage();
+    renderEditors();
+    renderRecent();
+    render();
+  };
+  window.getReciteMetrics = function() {
+    return {
+      done: state.checks.flat().filter(Boolean).length,
+      paras: state.paragraphs.length,
+      hist: recent.length
+    };
+  };
+
+  window.reloadReciteFromStorage();
+})();
+
+// ============================================================================
+// 工具 02：俄语单词挖空练习 (Russian_WordCloze) 完整逻辑
+// ============================================================================
+(function initWordClozeTool(){
+  const vowels = /[аеёиоуыэюя]/i;
+  const letter = /[А-Яа-яЁё]/u;
+  function chars(s) {
+    return Array.from(s.normalize('NFD').replace(/е\u0308/g, 'ё').replace(/Е\u0308/g, 'Ё').replace(/и\u0306/g, 'й').replace(/И\u0306/g, 'Й')).reduce((a, c) => {
+      if (/\p{M}/u.test(c) && a.length) a[a.length - 1] += c;
+      else a.push(c);
+      return a;
+    }, []);
+  }
+  function autoSyllables(word) {
+    const a = chars(word);
+    const nuclei = [];
+    a.forEach((c, i) => { if (vowels.test(c)) nuclei.push(i); });
+    if (nuclei.length < 2) return [word];
+    let start = 0, out = [];
+    for (let j = 0; j < nuclei.length - 1; j++) {
+      const v = nuclei[j], next = nuclei[j + 1];
+      let cut = next === v + 1 ? next : next - 1;
+      while (cut > v + 1 && /[ьъй-‑]/i.test(a[cut])) cut--;
+      if (/[ьъй-‑]/i.test(a[cut])) cut++;
+      out.push(a.slice(start, cut).join(''));
+      start = cut;
+    }
+    out.push(a.slice(start).join(''));
+    return out.filter(Boolean);
+  }
+  function parseInput(text) {
+    return text.split(/\r?\n/).map((raw, i) => {
+      if (!raw.trim()) return null;
+      const parts = raw.split('|');
+      const marked = parts.shift().trim();
+      if (!/^[А-Яа-яЁё\u0300\u0301\u0341/\-‑]+$/u.test(marked) || !/[А-Яа-яЁё]/u.test(marked))
+        throw Error('第 ' + (i + 1) + ' 行请只输入一个俄语单词，释义放在 | 后面。');
+      if (marked.startsWith('/') || marked.endsWith('/') || marked.includes('//'))
+        throw Error('第 ' + (i + 1) + ' 行的 / 两侧都应有音节。');
+      const word = marked.replaceAll('/', '');
+      const syllables = marked.includes('/') ? marked.split('/') : autoSyllables(word);
+      return { word, syllables, gloss: parts.join('|').trim(), manual: marked.includes('/') };
+    }).filter(Boolean);
+  }
+  function region(n, mode) {
+    if (mode === 1) return [0, n];
+    if (mode === 2) {
+      if (n < 3) return [0, 0];
+      const edge = Math.max(1, Math.floor(n / 3));
+      return [edge, n - edge];
+    }
+    if (mode === 3) return [0, Math.ceil(n / 2)];
+    return [Math.ceil(n / 2), n];
+  }
+  function segments(entry, mode, parity) {
+    if (mode === 0) return entry.syllables.map((s, i) => ({ text: s, hide: (i + 1) % 2 === parity, syllable: true }));
+    const a = chars(entry.word);
+    const n = a.filter(c => letter.test(c)).length;
+    const [lo, hi] = region(n, mode);
+    let count = 0;
+    const parts = a.map(c => {
+      if (!letter.test(c)) return { text: c, hide: false };
+      const idx = count++;
+      return { text: c, hide: idx >= lo && idx < hi && (mode >= 2 || (idx - lo + 1) % 2 === parity) };
+    });
+    if (mode < 2) return parts;
+    return parts.reduce((out, part) => {
+      const last = out[out.length - 1];
+      if (last && last.hide === part.hide) last.text += part.text;
+      else out.push({ ...part });
+      return out;
+    }, []);
+  }
+
+  const KEY = 'neo-word-cloze-v1', HISTORY_KEY = KEY + '-history', DRAFT_KEY = KEY + '-draft';
+  const names = ['按音节挖', '逐个字母挖', '从中间挖', '挖前面', '挖后面'];
+  const desc = [
+    '音节从左至右编号，挖去奇数或偶数音节。',
+    '全部字母从左至右编号，挖去奇数或偶数字母。',
+    '保留两端约各三分之一，将中间区域全部挖空。',
+    '将前半部分全部挖空；奇数字长时，多出的一个归前面。',
+    '将后半部分全部挖空；奇数字长时，后面少一个。'
+  ];
+
+  let state = { text: '', checks: Array.from({ length: 7 }, () => Array(5).fill(false)), mode: 0, parity: 1, gloss: 'show' };
+  let entries = [];
+  let recent = [];
+  let answerOpen = false;
+
+  function wordKey(word) { return word.normalize('NFC').toLocaleLowerCase('ru').replace(/[\u0300\u0301\u0341]/g, ''); }
+  function recentItem(line) {
+    const e = parseInput(line);
+    if (e.length !== 1) throw Error('invalid');
+    return { line: line.trim(), key: wordKey(e[0].word), word: e[0].word, gloss: e[0].gloss };
+  }
+
+  function loadFromStorage() {
+    state = { text: '', checks: Array.from({ length: 7 }, () => Array(5).fill(false)), mode: 0, parity: 1, gloss: 'show' };
+    entries = [];
+    recent = [];
+    try {
+      const s = JSON.parse(safeGet(KEY));
+      if (s && typeof s.text === 'string' && Array.isArray(s.checks) && [7, 10].includes(s.checks.length) && s.checks.every(a => Array.isArray(a) && a.length === 5)) {
+        state = {
+          text: s.text,
+          checks: (s.checks.length === 10 ? [0, 1, 2, 3, 4, 6, 8].map(i => s.checks[i]) : s.checks).map(a => a.map(Boolean)),
+          mode: Number.isInteger(s.mode) && s.mode >= 0 && s.mode < 5 ? s.mode : 0,
+          parity: s.parity === 0 ? 0 : 1,
+          gloss: s.gloss === 'hide' ? 'hide' : 'show'
+        };
+        entries = parseInput(state.text);
+      }
+    } catch {}
+    try {
+      const raw = safeGet(HISTORY_KEY);
+      if (raw === null || raw === undefined) {
+        recent = entries.map(e => recentItem((e.manual ? e.syllables.join('/') : e.word) + (e.gloss ? ' | ' + e.gloss : ''))).reverse();
+      } else {
+        const a = JSON.parse(raw);
+        if (Array.isArray(a)) {
+          for (const item of a) {
+            try {
+              const r = recentItem(item.line);
+              if (!recent.some(x => x.key === r.key)) recent.push(r);
+            } catch {}
+          }
+        }
+      }
+      recent = recent.slice(0, 100);
+    } catch {}
+    $('wc-input').value = state.text;
+    try {
+      const draft = safeGet(DRAFT_KEY);
+      if (draft !== null && draft !== undefined) $('wc-input').value = draft;
+    } catch {}
+    $('wc-gloss').value = state.gloss;
+  }
+
+  function saveDraft() {
+    if (safeSet(DRAFT_KEY, $('wc-input').value)) {
+      markLocalChanged();
+      return true;
+    }
+    return false;
+  }
+  function saveRecent() {
+    if (safeSet(HISTORY_KEY, JSON.stringify(recent))) {
+      markLocalChanged();
+      return true;
+    }
+    return false;
+  }
+  function save() {
+    if (safeSet(KEY, JSON.stringify(state))) {
+      markLocalChanged();
+      return true;
+    }
+    return false;
+  }
+
+  function renderRecent() {
+    $('wc-historyList').replaceChildren();
+    $('wc-historyCount').textContent = recent.length + ' / 100';
+    if (!recent.length) {
+      $('wc-historyList').append(el('p', 'hint', '还没有记录。输入单词后点击“保存到最近单词”或“生成七个版本”。'));
+      return;
+    }
+    for (const item of recent) {
+      const chip = el('div', 'historyitem'), add = el('button', 'historyword'), del = el('button', 'historychipdel', '×');
+      add.type = 'button';
+      del.type = 'button';
+      add.append(el('span', '', item.word));
+      if (item.gloss) add.append(el('small', '', item.gloss));
+      add.setAttribute('aria-label', '将 ' + item.word + ' 加入输入框');
+      add.onclick = () => {
+        const already = $('wc-input').value.split(/\r?\n/).some(line => {
+          try { return recentItem(line).key === item.key; } catch { return false; }
+        });
+        if (already) {
+          $('wc-status').textContent = item.word + ' 已在输入框中。';
+          return;
+        }
+        $('wc-input').value = ($('wc-input').value.trim() ? $('wc-input').value.trimEnd() + '\n' : '') + item.line;
+        if (saveDraft()) $('wc-status').textContent = '已加入 ' + item.word + '，点击生成练习即可使用。';
+      };
+      del.setAttribute('aria-label', '删除最近记录 ' + item.word);
+      del.onclick = () => {
+        recent = recent.filter(x => x.key !== item.key);
+        const ok = saveRecent();
+        renderRecent();
+        if (ok) $('wc-status').textContent = '已删除 ' + item.word + ' 的最近记录。';
+      };
+      chip.append(add, del);
+      $('wc-historyList').append(chip);
+    }
+  }
+
+  function rememberInput() {
+    let valid = [];
+    for (const line of $('wc-input').value.split(/\r?\n/)) {
+      try { valid.push(recentItem(line)); } catch {}
+    }
+    for (const item of valid) {
+      recent = recent.filter(x => x.key !== item.key);
+      recent.unshift(item);
+    }
+    recent = recent.slice(0, 100);
+    const ok = saveRecent();
+    renderRecent();
+    return { ok, count: valid.length };
+  }
+
+  function activeIndex() { return state.mode < 2 ? state.mode * 2 + (state.parity === 1 ? 0 : 1) : state.mode + 2; }
+  function summary() {
+    const total = state.checks.flat().filter(Boolean).length;
+    $('wc-stats').textContent = '本版 ' + state.checks[activeIndex()].filter(Boolean).length + '/5 遍 · 总计 ' + total + '/35 遍';
+    $('wc-cards').querySelectorAll('.card').forEach((c, i) => {
+      c.querySelector('.count').textContent = state.checks[i].filter(Boolean).length + '/5 遍';
+    });
+  }
+  function setBlank(b, open) {
+    b.dataset.open = String(open);
+    b.setAttribute('aria-pressed', String(open));
+    b.setAttribute('aria-label', open ? b.textContent + '，点击隐藏' : '空白，点击查看答案');
+  }
+  function selectMode() {
+    $('wc-parities').hidden = state.mode >= 2;
+    answerOpen = false;
+    $('wc-reveal').textContent = '查看本版答案';
+    $('wc-cards').querySelectorAll('.blank').forEach(b => setBlank(b, false));
+    $('wc-cards').querySelectorAll('.card').forEach((c, i) => c.hidden = i !== activeIndex());
+    Array.from($('wc-modes').children).forEach((b, i) => {
+      b.setAttribute('aria-selected', String(i === state.mode));
+      b.setAttribute('aria-controls', 'wc-card-' + activeIndex());
+    });
+    Array.from($('wc-parities').children).forEach((b, i) => {
+      b.setAttribute('aria-selected', String((i === 0 ? 1 : 0) === state.parity));
+      b.setAttribute('aria-controls', 'wc-card-' + activeIndex());
+    });
+    summary();
+    save();
+  }
+
+  function render() {
+    $('wc-cards').replaceChildren();
+    $('wc-modes').replaceChildren();
+    $('wc-parities').replaceChildren();
+    $('wc-review').hidden = !entries.length;
+    $('wc-controls').hidden = !entries.length;
+    $('wc-tools').hidden = !entries.length;
+    if (!entries.length) {
+      $('wc-cards').append(el('div', 'empty', '输入单词，或载入示例，生成你的七个挖空版本。'));
+      return;
+    }
+    $('wc-original').textContent = entries.map((e, i) => (i + 1) + '. ' + e.syllables.join(' / ') + (e.manual ? ' [手动]' : ' [自动近似]') + (e.gloss ? ' — ' + e.gloss : '')).join('\n');
+    names.forEach((name, i) => {
+      const b = el('button', '', name);
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.onclick = () => { state.mode = i; selectMode(); };
+      $('wc-modes').append(b);
+    });
+    ['奇数版 / Нечётные', '偶数版 / Чётные'].forEach((name, i) => {
+      const b = el('button', '', name);
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.onclick = () => { state.parity = i === 0 ? 1 : 0; selectMode(); };
+      $('wc-parities').append(b);
+    });
+    for (let mode = 0; mode < 5; mode++) {
+      for (const parity of (mode < 2 ? [1, 0] : [1])) {
+        const idx = mode < 2 ? mode * 2 + (parity === 1 ? 0 : 1) : mode + 2;
+        const card = el('section', 'card');
+        card.id = 'wc-card-' + idx;
+        card.setAttribute('role', 'tabpanel');
+        const head = el('div', 'cardhead'), title = el('div');
+        title.append(el('div', 'badge', '练习 ' + String(idx + 1).padStart(2, '0') + ' / 7'), el('h2', '', names[mode] + ' · ' + (mode < 2 ? (parity ? '奇数版' : '偶数版') : '整块挖空')));
+        head.append(title, el('span', 'count hint'));
+        card.append(head, el('p', 'hint', desc[mode] + (mode < 2 ? ' 每个词独立编号。' : ' 点击整块空白查看对应部分。')));
+        const list = el('div', 'wordlist');
+        entries.forEach((e, i) => {
+          const row = el('div', 'wordrow'), content = el('div'), spell = el('div', 'spelling');
+          spell.lang = 'ru';
+          const parts = segments(e, mode, parity);
+          parts.forEach((part, j) => {
+            if (j && mode === 0) spell.append(el('span', 'sep', '·'));
+            if (part.hide) {
+              const b = el('button', 'blank', part.text);
+              b.type = 'button';
+              setBlank(b, false);
+              b.onclick = () => setBlank(b, b.dataset.open !== 'true');
+              spell.append(b);
+            } else {
+              spell.append(el('span', mode === 0 ? 'syllable' : '', part.text));
+            }
+          });
+          if (!parts.some(p => p.hide)) spell.append(el('span', 'none', '本词此版无可挖位置'));
+          content.append(spell);
+          if (e.gloss) {
+            const g = el('div', 'gloss', e.gloss);
+            g.hidden = state.gloss === 'hide';
+            content.append(g);
+          }
+          row.append(el('span', 'idx', String(i + 1).padStart(2, '0')), content);
+          list.append(row);
+        });
+        card.append(list);
+        const rounds = el('div', 'rounds');
+        state.checks[idx].forEach((checked, j) => {
+          const b = el('button', 'round');
+          b.type = 'button';
+          function update() {
+            const v = state.checks[idx][j];
+            b.textContent = (v ? '✓' : '□') + ' 第 ' + (j + 1) + ' 遍';
+            b.setAttribute('aria-pressed', String(v));
+          }
+          update();
+          b.onclick = () => {
+            state.checks[idx][j] = !state.checks[idx][j];
+            update();
+            summary();
+            save();
+          };
+          rounds.append(b);
+        });
+        card.append(rounds);
+        $('wc-cards').append(card);
+      }
+    }
+    selectMode();
+  }
+
+  function applyGenerate(parsed, text) {
+    if (text !== state.text) state.checks = Array.from({ length: 7 }, () => Array(5).fill(false));
+    state.text = text;
+    entries = parsed;
+    saveDraft();
+    const historySaved = rememberInput().ok;
+    render();
+    if (save() && historySaved) $('wc-status').textContent = '已生成 ' + entries.length + ' 个单词、七个版本。已自动保存并关联云端。';
+  }
+
+  function generate() {
+    let parsed;
+    try { parsed = parseInput($('wc-input').value); } catch (e) { $('wc-status').textContent = e.message; return; }
+    if (!parsed.length) { $('wc-status').textContent = '请先输入至少一个俄语单词。'; return; }
+    const text = $('wc-input').value.trim();
+    if (text !== state.text && state.checks.flat().some(Boolean)) {
+      askConfirm('更换词表将清空七个版本的勾选进度，继续吗？', () => applyGenerate(parsed, text));
+      return;
+    }
+    applyGenerate(parsed, text);
+  }
+
+  $('wc-input').oninput = saveDraft;
+  $('wc-input').onblur = () => { saveDraft(); rememberInput(); };
+  $('wc-clear').onclick = () => {
+    $('wc-input').value = '';
+    if (saveDraft()) $('wc-status').textContent = '输入框已清空。最近单词、当前练习和勾选进度已保留。';
+  };
+  $('wc-saveRecent').onclick = () => {
+    saveDraft();
+    const r = rememberInput();
+    if (r.ok) $('wc-status').textContent = r.count ? '已保存 ' + r.count + ' 个有效单词到最近记录。' : '请先输入有效的俄语单词，每行一个。';
+  };
+  $('wc-generate').onclick = generate;
+  $('wc-example').onclick = () => {
+    $('wc-input').value = 'ви/но | 葡萄酒\nмо/ло/ко | 牛奶\nра/бо/та | 工作\nви/но/град | 葡萄\nбро/же/ни/е | 发酵';
+    const parsed = parseInput($('wc-input').value);
+    applyGenerate(parsed, $('wc-input').value.trim());
+  };
+  $('wc-reset').onclick = () => {
+    if (state.checks.flat().some(Boolean)) {
+      askConfirm('清空所有版本的勾选？单词不变。', () => {
+        state.checks = Array.from({ length: 7 }, () => Array(5).fill(false));
+        save();
+        render();
+      });
+    }
+  };
+  $('wc-reveal').onclick = () => {
+    answerOpen = !answerOpen;
+    const activeCard = $('wc-card-' + activeIndex());
+    if (activeCard) activeCard.querySelectorAll('.blank').forEach(b => setBlank(b, answerOpen));
+    $('wc-reveal').textContent = answerOpen ? '隐藏本版答案' : '查看本版答案';
+  };
+  $('wc-gloss').onchange = () => {
+    state.gloss = $('wc-gloss').value;
+    $('wc-cards').querySelectorAll('.gloss').forEach(e => e.hidden = state.gloss === 'hide');
+    save();
+  };
+  $('wc-print').onclick = () => {
+    if (!entries.length) { $('wc-status').textContent = '请先生成练习再打印。'; return; }
+    window.print();
+  };
+
+  window.reloadClozeFromStorage = function() {
+    loadFromStorage();
+    render();
+    renderRecent();
+  };
+  window.getClozeMetrics = function() {
+    return {
+      done: state.checks.flat().filter(Boolean).length,
+      words: entries.length,
+      hist: recent.length
+    };
+  };
+
+  window.reloadClozeFromStorage();
+})();
+
+// ============================================================================
+// 刷新主页仪表盘统计卡片
+// ============================================================================
+function refreshHubMetrics() {
+  if (typeof window.getReciteMetrics === 'function') {
+    const r = window.getReciteMetrics();
+    $('hub-rec-done').textContent = r.done + ' / 20';
+    $('hub-rec-paras').textContent = r.paras + ' 段';
+    $('hub-rec-hist').textContent = r.hist + ' 条';
+  }
+  if (typeof window.getClozeMetrics === 'function') {
+    const c = window.getClozeMetrics();
+    $('hub-word-done').textContent = c.done + ' / 35';
+    $('hub-word-count').textContent = c.words + ' 词';
+    $('hub-word-hist').textContent = c.hist + ' 词';
+  }
+  const cfg = loadSyncCfg();
+  const meta = loadSyncMeta();
+  $('hub-sync-mode').textContent = (cfg.apiKey && cfg.url) ? (navigator.onLine ? '云端同步开启' : '离线缓存中') : '本地秒存模式';
+  if (meta.updatedAt) {
+    const d = new Date(meta.updatedAt);
+    $('hub-last-sync').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+}
+
+initCloudForm();
+refreshHubMetrics();
+syncWithCloud('auto');
+</script>
+</body>
+</html>
