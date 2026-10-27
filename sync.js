@@ -71,8 +71,7 @@
     return changed;
   }
 
-  // 拦截 localStorage.setItem，实现零侵入自动追踪修改并触发防抖同步
-  let syncTimer = null;
+  // 拦截 localStorage.setItem，仅记录本地修改时间，不自动联网同步（仅在用户手动点击“立即同步”时同步）
   Storage.prototype.setItem = function(k, v) {
     rawSetItem.call(this, k, v);
     if (!suppressHook && this === window.localStorage && isStudyKey(k)) {
@@ -81,8 +80,6 @@
       saveMeta(m);
       setDirty(true);
       updateBadge('dirty');
-      clearTimeout(syncTimer);
-      syncTimer = setTimeout(() => syncWithCloud(false), 1800);
     }
   };
 
@@ -210,9 +207,9 @@
     const map = {
       local:   { dot: '#8c7858', text: '本地离线保存 · 点击配置云同步' },
       offline: { dot: '#b5654d', text: '离线背诵中（联网后自动同步）' },
-      dirty:   { dot: '#c28b38', text: '进度已存本地 · 准备同步…' },
+      dirty:   { dot: '#c28b38', text: '本地已修改 · 点击右侧立即同步' },
       syncing: { dot: '#315c4e', text: '正在与云端同步…' },
-      synced:  { dot: '#2e7d5b', text: '云端已同步 · 跨设备实时共享' },
+      synced:  { dot: '#2e7d5b', text: '云端已同步 · 多端一致' },
       error:   { dot: '#b84a39', text: '同步待重试：' + (msg || '请检查配置') }
     };
     const cur = map[state] || map.local;
@@ -329,13 +326,12 @@
     if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
-    syncWithCloud(false);
   });
-  window.addEventListener('online', () => syncWithCloud(false));
+  window.addEventListener('online', () => {
+    const cfg = loadCfg();
+    updateBadge(cfg.apiKey && cfg.url ? (isDirty() ? 'dirty' : 'synced') : 'local');
+  });
   window.addEventListener('offline', () => updateBadge('offline'));
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') syncWithCloud(false);
-  });
 
   window.RuStudySync = { syncNow: () => syncWithCloud(true), openConfig: openSyncModal, collectSnapshot };
 })();

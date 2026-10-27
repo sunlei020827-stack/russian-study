@@ -1524,8 +1524,9 @@ function saveSyncMeta(m) {
   safeSet(SYNC_META_KEY, JSON.stringify(m));
 }
 
-let syncDebounce = null;
+let isApplyingCloudData = false;
 function markLocalChanged() {
+  if (isApplyingCloudData) return;
   const m = loadSyncMeta();
   m.updatedAt = Date.now();
   saveSyncMeta(m);
@@ -1533,11 +1534,9 @@ function markLocalChanged() {
   refreshHubMetrics();
   const cfg = loadSyncCfg();
   if (cfg.apiKey && cfg.url) {
-    setSyncBadge('dirty', '本地已存 · 准备同步…');
-    clearTimeout(syncDebounce);
-    syncDebounce = setTimeout(() => syncWithCloud('auto'), 1600);
+    setSyncBadge('dirty', '本地已修改 · 点击右侧立即同步');
   } else {
-    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地已自动保存' : '离线背诵中（本地已存）');
+    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地已保存 · 未配云端' : '离线背诵中（本地已存）');
   }
 }
 
@@ -1552,15 +1551,20 @@ function collectAllStudyData() {
 
 function applyAllStudyData(dataObj) {
   if (!dataObj || typeof dataObj !== 'object') return;
-  Object.entries(dataObj).forEach(([k, v]) => {
-    if (MANAGED_KEYS.includes(k) && typeof v === 'string') {
-      safeSet(k, v);
-    }
-  });
-  reloadReciteFromStorage();
-  reloadClozeFromStorage();
-  if (typeof window.reloadWineFromStorage === 'function') window.reloadWineFromStorage();
-  refreshHubMetrics();
+  isApplyingCloudData = true;
+  try {
+    Object.entries(dataObj).forEach(([k, v]) => {
+      if (MANAGED_KEYS.includes(k) && typeof v === 'string') {
+        safeSet(k, v);
+      }
+    });
+    reloadReciteFromStorage();
+    reloadClozeFromStorage();
+    if (typeof window.reloadWineFromStorage === 'function') window.reloadWineFromStorage();
+    refreshHubMetrics();
+  } finally {
+    isApplyingCloudData = false;
+  }
 }
 
 function setSyncBadge(state, text) {
@@ -1744,8 +1748,19 @@ $('cfg-importInput').addEventListener('change', e => {
   reader.readAsText(file);
 });
 
-window.addEventListener('online', () => syncWithCloud('auto'));
-window.addEventListener('offline', () => setSyncBadge('offline', '离线背诵中（联网自动同步）'));
+function refreshSyncBadgeStatus() {
+  const cfg = loadSyncCfg();
+  if (!navigator.onLine) {
+    setSyncBadge('offline', '离线模式 · 本地已保存');
+  } else if (cfg.apiKey && cfg.url) {
+    const dirty = safeGet(SYNC_DIRTY_KEY) === '1';
+    setSyncBadge(dirty ? 'dirty' : 'synced', dirty ? '本地有新进度 · 点击立即同步' : '云端就绪 · 手动点击同步');
+  } else {
+    setSyncBadge('local', '本地秒存 · 未连云端');
+  }
+}
+window.addEventListener('online', refreshSyncBadgeStatus);
+window.addEventListener('offline', refreshSyncBadgeStatus);
 
 // ============================================================================
 // 工具 01：俄语背诵室 (Russian_Recitation) 完整逻辑
@@ -2693,7 +2708,7 @@ function refreshHubMetrics() {
 
 initCloudForm();
 refreshHubMetrics();
-syncWithCloud('auto');
+refreshSyncBadgeStatus();
 </script>
 </body>
 </html>
