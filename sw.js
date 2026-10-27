@@ -1,11 +1,12 @@
-const CACHE_NAME = 'ru-study-hub-v1';
+const CACHE_NAME = 'ru-study-hub-v2';
 const ASSETS = [
   './',
   './index.html',
   './sync.js',
   './manifest.json',
   './Russian_Recitation.html',
-  './Russian_WordCloze.html'
+  './Russian_WordCloze.html',
+  './White_Wine_Guide.html'
 ];
 
 self.addEventListener('install', event => {

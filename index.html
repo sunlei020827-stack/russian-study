@@ -539,6 +539,433 @@ footer {
   .card { break-inside: avoid; border: 1px solid #aaa; }
   .blank[data-open="false"], .blank[data-open="true"] { color: transparent !important; }
 }
+
+/* ==================== 工具 03：白葡萄酒酿造手记 专属样式 ==================== */
+#view-wine {
+  --accent: #a18345;
+  --serif: 'Songti SC', 'STSong', 'Noto Serif CJK SC', Georgia, serif;
+}
+#view-wine .ww-subnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+#view-wine .ww-subnav-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+#view-wine .ww-link-btn {
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  color: var(--ink);
+  font-size: 13px;
+  border-bottom: 1px solid transparent;
+}
+#view-wine .ww-link-btn:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+#view-wine .ww-plain-btn {
+  border: 1px solid var(--accent);
+  background: var(--paper);
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--ink);
+}
+#view-wine .ww-plain-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+#view-wine .ww-hero {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  align-items: center;
+  gap: 48px;
+  padding: 28px 0 36px;
+}
+#view-wine .ww-hero h1 {
+  font: normal clamp(32px, 4.2vw, 52px)/1.35 var(--serif);
+  letter-spacing: 2px;
+  margin: 14px 0;
+}
+#view-wine .ww-hero h1 em {
+  font-style: normal;
+  color: #7c8970;
+}
+#view-wine .ww-heroaside {
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--line);
+}
+#view-wine .ww-heroaside div {
+  padding: 18px 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+#view-wine .ww-heroaside div + div {
+  border-top: 1px solid var(--line);
+}
+#view-wine .ww-heroaside strong {
+  font: normal 32px/1.2 Georgia, serif;
+  white-space: nowrap;
+}
+#view-wine .ww-heroaside small {
+  font-size: 13px;
+  margin-left: 4px;
+}
+#view-wine .ww-heroaside span {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+}
+#view-wine .ww-scope {
+  border-top: 1px solid var(--line);
+  padding: 14px 0 32px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#view-wine .ww-scope b { color: var(--ink); font-weight: 600; }
+#view-wine .ww-sectiontop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin: 0 0 22px;
+  flex-wrap: wrap;
+}
+#view-wine .ww-sectiontop h2 {
+  font: normal 27px/1.4 var(--serif);
+  letter-spacing: 1.5px;
+  margin: 8px 0 0;
+}
+#view-wine .ww-switch {
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--line);
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--paper);
+}
+#view-wine .ww-switch button {
+  border: 0;
+  background: transparent;
+  padding: 7px 14px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+#view-wine .ww-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+#view-wine .ww-reader {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 580px;
+}
+#view-wine .ww-stepnav {
+  background: #edefe5;
+  border-right: 1px solid var(--line);
+  max-height: 660px;
+  overflow: auto;
+  padding: 12px 0;
+}
+#view-wine .ww-phase {
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 14px 18px 6px;
+  color: var(--accent);
+  font-weight: 600;
+}
+#view-wine .ww-step {
+  width: 100%;
+  display: flex;
+  text-align: left;
+  align-items: baseline;
+  gap: 10px;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  background: none;
+  padding: 9px 16px;
+  font-size: 12.5px;
+}
+#view-wine .ww-step span {
+  font: 12px Georgia, serif;
+  color: #8b9583;
+}
+#view-wine .ww-step:hover { background: #e6eadd; }
+#view-wine .ww-step[aria-current="step"] {
+  background: #dfe6d6;
+  border-left-color: var(--ink);
+  font-weight: 600;
+}
+#view-wine .ww-mobile-select { display: none; }
+#view-wine .ww-detail {
+  padding: 30px 34px;
+  min-width: 0;
+}
+#view-wine .ww-detailhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+#view-wine .ww-kicker { font-size: 11px; color: var(--accent); }
+#view-wine .ww-position {
+  font: italic 38px/1 Georgia, serif;
+  color: #c6cebc;
+}
+#view-wine .ww-position small {
+  font: 11px sans-serif;
+  color: var(--muted);
+}
+#view-wine .ww-detail h3 {
+  font: normal 27px/1.45 var(--serif);
+  margin: 14px 0 8px;
+}
+#view-wine .ww-russian {
+  display: none;
+  color: var(--muted);
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 6px 0;
+}
+#view-wine.show-ru .ww-russian {
+  display: block;
+}
+#view-wine .ww-summary {
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--ink);
+  margin: 6px 0 20px;
+}
+#view-wine .ww-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+#view-wine .ww-metric {
+  border-top: 1px solid #b6c2a6;
+  padding-top: 12px;
+}
+#view-wine .ww-metric span { display: block; font-size: 11px; color: var(--muted); }
+#view-wine .ww-metric strong {
+  display: block;
+  font: normal 23px/1.35 Georgia, var(--serif);
+  margin: 6px 0;
+}
+#view-wine .ww-metric small {
+  display: block;
+  font-size: 10.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+#view-wine .ww-datanote {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+#view-wine .ww-datanote h4 {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 0 0 6px;
+}
+#view-wine .ww-datanote p {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.9;
+  margin: 0;
+}
+#view-wine .ww-source-note {
+  font-size: 11.5px;
+  line-height: 1.85;
+  color: #7b7157;
+  margin: 14px 0 0;
+}
+#view-wine .ww-supplement {
+  margin-top: 22px;
+  border-top: 1px solid var(--accent);
+  padding-top: 16px;
+}
+#view-wine .ww-supplement h4 {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0;
+}
+#view-wine .ww-supplement h4 span {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 8px;
+}
+#view-wine .ww-supplement p {
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: var(--ink);
+}
+#view-wine .ww-refline {
+  font-size: 11px;
+  color: var(--accent);
+}
+#view-wine .ww-refline a, #view-wine td a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--accent);
+}
+#view-wine .ww-detailfoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 22px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+#view-wine .ww-arrows { display: flex; gap: 8px; }
+#view-wine .ww-arrows button { min-width: 42px; height: 34px; }
+#view-wine .ww-chapterlist {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+#view-wine .ww-chapter {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  padding: 24px 26px;
+  border-bottom: 1px solid var(--line);
+}
+#view-wine .ww-chapter:last-child { border-bottom: 0; }
+#view-wine .ww-chapter > span {
+  font: italic 25px/1.4 Georgia, serif;
+  color: #a1ac94;
+}
+#view-wine .ww-chapter h3 {
+  font: normal 20px/1.45 var(--serif);
+  margin: 0 0 6px;
+}
+#view-wine .ww-chapter p { font-size: 13px; color: var(--ink); margin: 6px 0; }
+#view-wine .ww-chapter .ww-numbers { font-size: 12px; color: #617453; }
+#view-wine .ww-chapter .ww-source { font-size: 11px; color: var(--accent); }
+#view-wine .ww-section { margin-top: 52px; }
+#view-wine .ww-tablewrap {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+#view-wine table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 720px;
+  text-align: left;
+  font-size: 12.5px;
+}
+#view-wine thead { background: #e9ede1; color: #627259; }
+#view-wine th, #view-wine td {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+#view-wine tr:last-child td { border-bottom: 0; }
+#view-wine td:nth-child(2) {
+  font: 16px/1.55 Georgia, var(--serif);
+  min-width: 135px;
+}
+#view-wine td:nth-child(3) {
+  color: var(--accent);
+  font-size: 11px;
+  white-space: nowrap;
+}
+#view-wine td:last-child {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+#view-wine .ww-sensory {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
+}
+#view-wine .ww-sense {
+  border-top: 1px solid var(--accent);
+  padding-top: 14px;
+}
+#view-wine .ww-sense span {
+  font: italic 15px Georgia, serif;
+  color: var(--accent);
+}
+#view-wine .ww-sense h3 {
+  font: normal 20px var(--serif);
+  margin: 8px 0 10px;
+}
+#view-wine .ww-sources {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 40px;
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+  margin-top: 50px;
+}
+#view-wine .ww-sourceitems {
+  font-size: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px 22px;
+  align-content: start;
+}
+#view-wine .ww-sourceitems a {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 9px;
+  color: var(--ink);
+  text-decoration: none;
+}
+#view-wine .ww-sourceitems a span {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+}
+#view-wine .ww-sourceitems b {
+  font: 11px Georgia, serif;
+  color: var(--accent);
+}
+@media (max-width: 720px) {
+  #view-wine .ww-hero { grid-template-columns: 1fr; gap: 22px; }
+  #view-wine .ww-reader { display: block; }
+  #view-wine .ww-stepnav { display: none; }
+  #view-wine .ww-mobile-select {
+    display: block;
+    padding: 14px;
+    border-bottom: 1px solid var(--line);
+    background: #edefe5;
+  }
+  #view-wine .ww-detail { padding: 22px 18px; }
+  #view-wine .ww-sources { grid-template-columns: 1fr; gap: 20px; }
+}
+
 </style>
 <link rel="manifest" href="manifest.json"><meta name="theme-color" content="#315c4e"></head>
 <body>
@@ -555,6 +982,7 @@ footer {
     <button type="button" class="nav-btn" id="nav-hub" aria-current="page">工具箱总览</button>
     <button type="button" class="nav-btn" id="nav-recite">01 · 俄语背诵室</button>
     <button type="button" class="nav-btn" id="nav-cloze">02 · 单词挖空练习</button>
+    <button type="button" class="nav-btn" id="nav-wine">03 · 白葡萄酒手记</button>
     <button type="button" class="nav-btn" id="nav-cloud">云同步与建站指南</button>
   </nav>
   <div class="sync-Controls">
@@ -620,7 +1048,26 @@ footer {
           </div>
         </div>
       </article>
-      
+
+      <!-- 工具 3 卡片 -->
+      <article class="hub-card">
+        <div>
+          <span class="hub-tag">TOOL 03 · 课堂 PPT 与双语工艺手册</span>
+          <h2>白葡萄酒 · 酿造手记</h2>
+          <p>涵盖从葡萄采收到灌装封口的 23 个核心工序、68 项理化与工艺参数速查表、成品感官特征及中俄双语对照切换。</p>
+        </div>
+        <div>
+          <div class="hub-metrics">
+            <div class="hub-metric"><strong id="hub-wine-step">第 01 步</strong><span>当前阅读工序</span></div>
+            <div class="hub-metric"><strong>23 环节</strong><span>完整酿造路径</span></div>
+            <div class="hub-metric"><strong id="hub-wine-lang">中文模式</strong><span>双语对照状态</span></div>
+          </div>
+          <div class="actions" style="margin-top:16px">
+            <button type="button" class="primary" id="openWineBtn">进入白葡萄酒手记 →</button>
+          </div>
+        </div>
+      </article>
+
       <!-- 扩展新工具与云端备份卡片 -->
       <article class="hub-card">
         <div>
@@ -741,6 +1188,143 @@ footer {
       <span class="hint">音节和逐字母模式分奇偶；其余三种模式整块隐藏，不分奇偶。</span>
     </div>
     <div id="wc-cards"></div>
+  </section>
+
+  <!-- ==================== 视图 3B：白葡萄酒酿造手记 (White_Wine_Guide) ==================== -->
+  <section id="view-wine" hidden>
+    <div class="ww-subnav">
+      <div class="ww-subnav-links">
+        <strong style="font-family:var(--serif);letter-spacing:1.5px">酿造手记 · WHITE WINE</strong>
+        <button type="button" class="ww-link-btn" id="ww-jump-process">01 酿造流程</button>
+        <button type="button" class="ww-link-btn" id="ww-jump-params">02 参数速查</button>
+        <button type="button" class="ww-link-btn" id="ww-jump-sensory">03 成品感官</button>
+        <button type="button" class="ww-link-btn" id="ww-jump-sources">04 资料核查</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button type="button" class="ww-plain-btn" id="ww-language" aria-pressed="false">显示俄语对照</button>
+        <button type="button" class="ww-plain-btn" id="ww-print">打印手记 ↗</button>
+      </div>
+    </div>
+
+    <div class="ww-hero">
+      <div>
+        <div class="eyebrow">TOOL 03 · 白葡萄酒 / 课堂工艺手册</div>
+        <h1>从一串葡萄，<br>到一杯<em>清澈干白。</em></h1>
+        <p>沿着采收、取汁、发酵与稳定处理的路径，把每一步的目的、重点和数字，读成完整的酿造过程。阅读位置与俄语对照开关会自动跨设备同步。</p>
+      </div>
+      <aside class="ww-heroaside" aria-label="课件关键数据">
+        <div><strong>23<small>个环节</small></strong><span>从采收到装瓶</span></div>
+        <div><strong>14—18<small>°C</small></strong><span>课件酒精发酵温度</span></div>
+        <div><strong>10—12<small>°C</small></strong><span>课件储存与陈酿温度</span></div>
+      </aside>
+    </div>
+
+    <div class="ww-scope">
+      <span><b>依据你的课件与笔记</b> · PPT第9—11、26—52页</span>
+      <span>课件原值 + 已查证补充 · 2026.10.27</span>
+    </div>
+
+    <div id="ww-process">
+      <div class="ww-sectiontop">
+        <div>
+          <div class="eyebrow">01 / 酿造路径</div>
+          <h2>理解每一个环节</h2>
+          <p class="sub">选择工序，查看重点、数据与对应PPT页码。</p>
+        </div>
+        <div class="ww-switch" aria-label="阅读方式">
+          <button type="button" id="ww-focusmode" aria-pressed="true">逐步阅读</button>
+          <button type="button" id="ww-allmode" aria-pressed="false">完整流程</button>
+        </div>
+      </div>
+
+      <div class="ww-reader" id="ww-reader">
+        <nav id="ww-steps" class="ww-stepnav" aria-label="23个工序"></nav>
+        <div class="ww-mobile-select">
+          <label for="ww-stepselect" style="display:block;font-size:11px;color:var(--muted);margin-bottom:4px">选择酿造环节</label>
+          <select id="ww-stepselect"></select>
+        </div>
+        <article class="ww-detail" id="ww-detail" aria-live="polite" aria-atomic="true"></article>
+      </div>
+      <div id="ww-allview" class="ww-chapterlist" hidden></div>
+    </div>
+
+    <div class="ww-section" id="ww-parameters">
+      <div class="ww-sectiontop">
+        <div>
+          <div class="eyebrow">02 / 理化与工艺数据</div>
+          <h2>把关键数字放在一起</h2>
+          <p class="sub">课件数据与补充参考并列，注明来源、工艺条件和适用范围。</p>
+        </div>
+        <div style="width:240px;max-width:100%">
+          <input id="ww-search" type="text" placeholder="搜索温度、糖、SO₂…" aria-label="搜索全部参数">
+        </div>
+      </div>
+      <div class="ww-tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">指标 / 所处阶段</th>
+              <th scope="col">数据 / 控制参考</th>
+              <th scope="col">来源</th>
+              <th scope="col">适用条件与重点</th>
+            </tr>
+          </thead>
+          <tbody id="ww-tbody"></tbody>
+        </table>
+        <div class="empty" id="ww-empty" hidden>没有匹配的参数。</div>
+      </div>
+      <p class="hint" style="margin-top:12px">读数说明：g/dm³与g/L相同，1 daL＝10 L；可滴定酸以酒石酸计，挥发酸以乙酸计。总SO₂包含游离与结合SO₂。“添加20 mg/L”与“总SO₂≤200 mg/L”是不同概念。PPT表示课件数值，S1—S21表示查询补充。</p>
+    </div>
+
+    <div class="ww-section" id="ww-sensory">
+      <div class="ww-sectiontop">
+        <div>
+          <div class="eyebrow">03 / 成品感官</div>
+          <h2>干白应该呈现什么样子</h2>
+          <p class="sub">对应PPT第9页，颜色和香气仍受品种及陈酿影响。</p>
+        </div>
+      </div>
+      <div class="ww-sensory">
+        <article class="ww-sense">
+          <span>i.</span>
+          <h3>清澈与光泽</h3>
+          <p>酒液清澈、有光泽，无不应出现的沉淀和悬浮颗粒。</p>
+          <p class="ww-russian">Вино прозрачное, с блеском, без осадка и взвешенных частиц.</p>
+        </article>
+        <article class="ww-sense">
+          <span>ii.</span>
+          <h3>柠檬黄到金黄</h3>
+          <p>柠檬黄色，带绿色反光；陈酿后可呈稻草黄至金黄色。</p>
+          <p class="ww-russian">Цвет лимонно-жёлтый с зеленоватым оттенком; при выдержке — соломенный или золотистый.</p>
+        </article>
+        <article class="ww-sense">
+          <span>iii.</span>
+          <h3>纯净的花果香</h3>
+          <p>香气细腻、复杂而优雅，带花香和果香，无不应出现的异味。</p>
+          <p class="ww-russian">Аромат чистый, тонкий, с цветочными и фруктовыми оттенками.</p>
+        </article>
+        <article class="ww-sense">
+          <span>iv.</span>
+          <h3>清新与平衡</h3>
+          <p>口感干爽、新鲜，具有品种特征与果味；酸度、酒精及酒体协调。</p>
+          <p class="ww-russian">Вкус сухой, свежий, сортовой, гармоничный и сбалансированный.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="ww-sources" id="ww-sources">
+      <div>
+        <div class="eyebrow">04 / 资料与核查</div>
+        <h2>让每个数字都有出处</h2>
+        <p class="hint">保留课件与《干白葡萄酒制作流程笔记》的原值，并查证补充AWRI、IFV、大学推广资料、厂家方案及研究论文。每条补充标出适用条件，点击S编号可查来源。</p>
+        <p class="hint">核查日期：2026年10月27日。</p>
+      </div>
+      <div class="ww-sourceitems" id="ww-references"></div>
+    </div>
+
+    <script id="ww-source-data" type="application/json">[["S1", "AWRI · 铁与金属不稳定", "https://www.awri.com.au/industry_support/winemaking_resources/fining-stabilities/hazes_and_deposits/amorphous_deposits/"], ["S2", "IFV · 亚硫酸盐与使用剂量（2021），第9页", "https://www.vignevin.com/wp-content/uploads/2021/11/2021-11-CItineraire30-sulfites-36p-V8_BAT.pdf"], ["S3", "IFV · 白葡萄酒技术资料（2025），第17页", "https://www.vignevin.com/wp-content/uploads/2025/01/Beaujotech-2025-Juste-le-blanc-Actes.pdf"], ["S4", "Alsace · 葡萄汁静置澄清", "https://www.vinsalsace.com/fr/terroirs/travaux-de-la-vigne/debourbage/"], ["S5", "Lallemand · 活性干酵母复水指南", "https://admin.lallemandwine.com/wp-content/uploads/2014/07/Vinification-guide1_Good-rehydration-practices-for-selected-yeasts-Anglais.pdf"], ["S6", "AWRI · 酵母可同化氮 YAN", "https://www.awri.com.au/industry_support/winemaking_resources/wine_fermentation/yan/"], ["S7", "AWRI · 膨润土下胶小试", "https://www.awri.com.au/industry_support/winemaking_resources/laboratory_methods/chemical/conducting-a-bentonite-fining-trial/"], ["S8", "IFV · 酒石稳定技术", "https://www.vignevin.com/publications/fiches-pratiques/stabilisation-tartrique/"], ["S9", "AWRI · 冷稳定检验", "https://www.awri.com.au/industry_support/winemaking_resources/laboratory_methods/chemical/cold_stab/"], ["S10", "AWRI · 过滤与膜完整性", "https://www.awri.com.au/industry_support/winemaking_resources/storage-and-packaging/pre-packaging-preparation/filtration-physical-removal-of-microorganisms/"], ["S11", "AWRI · 装瓶前理化参考目标", "https://www.awri.com.au/industry_support/winemaking_resources/storage-and-packaging/pre-packaging-preparation/pre-bottling-wine-adjustments-and-specifications/"], ["S12", "AWRI · 装瓶前气体调整", "https://www.awri.com.au/industry_support/winemaking_resources/storage-and-packaging/pre-packaging-preparation/gas-adjustment/"], ["S13", "Virginia Tech · 细酒泥管理，Enology Notes 106", "https://enology.fst.vt.edu/EN/106.html"], ["S14", "Iowa State · 白葡萄采收糖度参考", "https://www.extension.iastate.edu/wine/wp-content/uploads/2017/06/winegrowers13.pdf"], ["S15", "Jean Vesselle · 气囊压榨实际程序示例", "https://www.champagnejeanvesselle.com/fr/visite-technique/champagne/visite-technique"], ["S16", "AWRI · SO₂、pH与转罐吸氧", "https://www.awri.com.au/industry_support/winemaking_resources/fining-stabilities/microbiological/avoidance/sulfur_dioxide/"], ["S17", "Iowa State · 下胶小试原则", "https://www.extension.iastate.edu/wine/bench-trials-0"], ["S18", "研究论文 · 白葡萄酒酒泥培养实验示例", "https://www.mdpi.com/2311-5637/6/3/66"], ["S19", "研究论文 · 白葡萄汁低温澄清实验条件", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9368000/"], ["S21", "AWRI · 热稳定检验", "https://www.awri.com.au/industry_support/winemaking_resources/laboratory_methods/chemical/heat_stab/"], ["S20", "AWRI · 原料处理时间、温度与卫生", "https://www.awri.com.au/files/attachment/seminar_201308_avoca/"]]</script>
+    <script id="ww-step-data" type="application/json">[{"title": "采收", "ruTitle": "Сбор винограда", "source": "26；原料指标见11", "ru": "Собирают здоровый виноград подходящей зрелости. Срок сбора определяют по сахаристости, кислотности и состоянию ягод.", "zh": "采收健康、成熟度适宜的葡萄。结合糖分、酸度和果粒状况确定采收时间。", "zhData": "原料表列普通酿酒用途糖分≥150 g/L，可滴定酸≥6.0 g/L，以酒石酸计；表中有特定用途例外。它们不是所有干白的最佳采收目标。", "ruData": "В таблице сырья: сахара для производства вина ≥150 г/л; титруемая кислотность ≥6,0 г/л в пересчёте на винную кислоту, с оговорками для отдельных случаев.", "metrics": [["原料糖分", "≥150 g/L", "原料表普通酿酒用途"], ["原料可滴定酸", "≥6.0 g/L", "以酒石酸计，特定用途有例外"]], "phase": "原料与前处理", "supp": {"metrics": [["白葡萄采收糖度", "18—24 °Bx", "补充参考 S14；随品种与风格调整"]], "zh": "°Bx为可溶性固形物质量分数的表达，不能直接等同于g/L糖。18—24 °Bx用于理解常见成熟度量级，不替换课件原料最低值。", "ru": "18–24 °Bx — ориентир зрелости белого винограда. °Bx характеризует массовую долю растворимых веществ; это не то же самое, что сахар в г/л.", "refs": ["S14"]}}, {"title": "运输", "ruTitle": "Транспортировка", "source": "27", "ru": "Быстро доставляют виноград на завод в чистой таре. Ограничивают раздавливание ягод, нагревание и окисление.", "zh": "用清洁容器迅速运到酒厂，减少挤压破损、升温和氧化。", "zhData": "运输按原料温度、破损程度、卫生和路程管理：缩短采收到处理的间隔，避免升温和非计划发酵。不能将鲜食葡萄长途冷藏的温湿度标准直接套给酿酒葡萄。", "ruData": "Фиксируют время от сбора до приёмки и температуру ягод; сокращают задержки, нагрев и повреждения. Режим перевозки столового винограда не является нормативом для винодельческого сырья.", "metrics": [["运输控制", "快速、轻柔", "记录采收—到厂间隔与果温"]], "phase": "原料与前处理", "supp": {"metrics": [], "zh": "AWRI建议原料处理时间尽可能短、温度尽可能低且符合实际条件。已按课件预冷到0—2°C的原料应衔接冷链；0—2°C是这套预冷方案的条件，不是所有运输必须达到的温度。", "ru": "AWRI рекомендует минимизировать время и поддерживать практически достижимую низкую температуру. Для сырья, предварительно охлаждённого по лекции до 0–2°C, сохраняют холодовую цепь.", "refs": ["S20"]}}, {"title": "接收与检验", "ruTitle": "Приёмка и контроль", "source": "28—30", "ru": "Приёмка включает количественный и качественный контроль. Проверяют массу, сорт, примеси, гниль, сахаристость и кислотность. При необходимости сырьё охлаждают.", "zh": "接收包括数量与质量验收。检查重量、品种、杂质、霉烂、糖分及酸度，必要时预冷。", "zhData": "代表性样品：无品种混杂≥3 kg，有混杂≥6 kg。课件高温原料预冷方案为0—2°C。", "ruData": "Средняя проба ≥3 кг без примеси сортов и ≥6 кг при смешении сортов. Предварительное охлаждение по лекции: 0–2°C.", "metrics": [["无品种混杂取样", "≥3 kg", "代表性样品"], ["有品种混杂取样", "≥6 kg", "代表性样品"], ["原料预冷", "0—2°C", "课件高温原料方案"]], "phase": "原料与前处理", "supp": {"metrics": [["接种前氮营养筛查", "约150 mg N/L", "S6：白葡萄汁低风险发酵最低需求参考"]], "zh": "YAN须在发酵前检测。糖高、温度低或酵母需氮量高时，150 mg N/L未必足够；不要把YAN含量当成营养盐的添加量。", "ru": "YAN измеряют до брожения. Около 150 мг N/л — ориентир минимальной потребности для белого сусла; при сложных условиях требуется больше.", "refs": ["S6"]}}, {"title": "卸料与分选", "ruTitle": "Разгрузка и сортировка", "source": "31—32", "ru": "Виноград равномерно подают на линию. Удаляют гнилые ягоды, листья и посторонние примеси.", "zh": "均匀供料，剔除腐烂果、树叶和其他杂质，避免原料长时间堆积。", "zhData": "课件规定在接料斗停留不超过30分钟。", "ruData": "Пребывание в приёмном бункере по лекции — не более 30 минут.", "metrics": [["接料斗停留", "≤30 min", "避免原料长时间堆积"]], "phase": "原料与前处理"}, {"title": "破碎与除梗", "ruTitle": "Дробление и гребнеотделение", "source": "33", "ru": "Мягко раздавливают ягоды и отделяют гребни. Освобождают сок и облегчают последующее прессование, избегая повреждения семян.", "zh": "轻柔破碎果粒并分离果梗，释放果汁、便于压榨，避免破坏葡萄籽及过度提取苦涩物质。", "zhData": "破碎机间隙、转速与压榨压力是不同参数。按设备手册和果粒大小调节，检查籽是否完整；整串压榨可省略破碎。压榨压力示例见第08环节。", "ruData": "Зазор дробилки и давление пресса — разные параметры. Настройку выбирают по размеру ягод и инструкции, сохраняя семена целыми. При прессовании целых гроздей дробление можно исключить.", "metrics": [["破碎要求", "破皮、不破籽", "按果粒尺寸与设备调整"]], "phase": "原料与前处理"}, {"title": "亚硫酸化", "ruTitle": "Сульфитация", "source": "34", "ru": "SO₂ ограничивает окисление и развитие нежелательной микрофлоры. Дополнительно применяют охлаждение и ограничение контакта с воздухом.", "zh": "SO₂用于控制氧化与不需要的微生物，同时结合低温和减少空气接触保护原料。", "zhData": "发酵前添加量与成品总SO₂是两回事。下面补充的是以纯SO₂计的发酵前用量参考；添加后要检测，结合pH、原料状态及后续是否做苹果酸—乳酸发酵调整。", "ruData": "Доза внесения до брожения не равна общему SO₂ готового вина. Дозу корректируют по pH, состоянию сырья и плану ЯМБ.", "metrics": [["保护措施", "低温、控氧", "SO₂结合pH与原料健康程度调整"]], "phase": "原料与前处理", "supp": {"metrics": [["发酵前SO₂添加", "30—60 mg/L", "S2；相当于3—6 g/hL纯SO₂"]], "zh": "IFV给出的发酵前经典用量范围。按果温、pH、腐烂和等待时间调整；这是纯SO₂当量，不是焦亚硫酸钾粉末质量，也不是游离SO₂目标。", "ru": "Классический ориентир IFV до брожения: 30–60 мг/л в пересчёте на чистый SO₂. Это не масса метабисульфита калия и не целевая концентрация свободного SO₂.", "refs": ["S2"]}}, {"title": "浸渍与冷浸渍", "ruTitle": "Мацерация", "source": "35", "ru": "При необходимости сусло выдерживают с кожицей для извлечения аромата. Приём особенно важен для Муската, Траминера и Виорики.", "zh": "按风格选择让果汁与果皮接触，提取香气。课件例举麝香、Traminer和Viorica等芳香型品种。", "zhData": "不同方案：2—4小时；原料0—2°C时10—12小时；另一冷浸方案约5°C、16小时。课件果胶酶2—4 g/100 kg，实际按产品说明。", "ruData": "Варианты: 2–4 ч; при 0–2°C — 10–12 ч; отдельный режим — около 5°C, 16 ч. Фермент: 2–4 г/100 кг по лекции.", "metrics": [["常规浸渍", "2—4 h", "提取芳香型品种香气"], ["低温方案一", "0—2°C / 10—12 h", "与其他方案分开理解"], ["低温方案二", "约5°C / 16 h", "另一冷浸方案"], ["果胶酶", "2—4 g/100 kg", "葡萄质量计，按制剂说明"]], "phase": "原料与前处理", "note": "以上是不同浸渍方案，不是需要依次叠加的处理步骤。"}, {"title": "自流汁分离与压榨", "ruTitle": "Отделение самотёка и прессование", "source": "36—38", "ru": "Отделяют сусло-самотёк, затем мягко прессуют мезгу. Фракции собирают отдельно; чрезмерное давление может ухудшать качество.", "zh": "先分离自流汁，再轻柔压榨葡萄醪，分级收汁。过度压榨可能增加苦涩和不需要的成分。", "zhData": "课件自流汁约55 daL/t＝550 L/t；与第一压榨级分合计约60 daL/t＝600 L/t，不是必须追求的固定出汁率。", "ruData": "Самотёк около 55 дал/т = 550 л/т; самотёк с первой прессовой фракцией около 60 дал/т = 600 л/т. Это ориентиры лекции.", "metrics": [["自流汁", "约550 L/t", "课件55 daL/t"], ["与第一压榨级分合计", "约600 L/t", "课件60 daL/t"]], "phase": "取汁与酒精发酵", "supp": {"metrics": [["气囊压榨程序示例", "每级+0.2 bar；最高2 bar", "S15：特定酒庄设备程序"]], "zh": "该示例说明逐级缓慢加压，并不要求每款干白都压到2 bar；设备、装料及果况不同，应分级收汁并品尝压榨汁。", "ru": "Пример пневматического прессования: повышение на 0,2 бар, максимум 2 бар. Это частная программа; фракции собирают отдельно, предельное давление не является обязательной целью.", "refs": ["S15"]}}, {"title": "葡萄汁澄清与除泥", "ruTitle": "Осветление сусла", "source": "39—40", "ru": "Избыток взвесей удаляют отстаиванием, центрифугированием, фильтрацией или флотацией. Осветлённое сусло отделяют от осадка.", "zh": "通过沉降、离心、过滤或浮选去除过量悬浮物，并将澄清汁与沉淀分离。适度澄清有助于获得纯净香气。", "zhData": "澄清目标是去掉粗颗粒，同时保留适合发酵的细悬浮物。按香气目标选择浊度；发酵前葡萄汁与装瓶前成品的浊度要求不同。", "ruData": "Удаляют грубые частицы, сохраняя подходящий для брожения уровень тонких взвесей. Мутность сусла до брожения отличается от мутности вина перед розливом.", "metrics": [["澄清方法", "沉降 / 浮选", "也可离心、过滤"]], "phase": "取汁与酒精发酵", "supp": {"metrics": [["澄清后浊度", "约50—200 NTU", "S3；按目标香气选择"], ["静置沉降时间", "12—24 h", "S4；静态澄清实践"], ["低温澄清实验参考", "10°C", "S19；研究条件"]], "zh": "IFV示例：约50 NTU偏酯香；100—150 NTU有利于相应品种硫醇香气表现；≥200 NTU仅考虑健康原料及相应酒泥风格。10°C为公开研究条件，12—24 h为产区实践，二者不是同一个统一标准。", "ru": "IFV: около 50 NTU — эфирный профиль; 100–150 NTU — тиольный профиль при наличии предшественников; ≥200 NTU — только для здорового сырья и соответствующего стиля. 10°C — исследовательский пример, 12–24 ч — практика статического отстаивания.", "refs": ["S3", "S4", "S19"]}}, {"title": "酵母接种", "ruTitle": "Внесение дрожжей", "source": "41—42", "ru": "В подготовленное сусло вносят выбранные дрожжи. Условия регидратации и внесения уточняют по инструкции препарата.", "zh": "向准备好的葡萄汁中接种选定酵母。复水与接种条件按具体酵母产品说明执行。", "zhData": "课件活性干酵母用量20—40 g/100 L。糖、酸和营养调整应根据检测结果决定。", "ruData": "Активные сухие дрожжи: 20–40 г/100 л по лекции.", "metrics": [["活性干酵母", "20—40 g/100 L", "课件用量"]], "phase": "取汁与酒精发酵", "supp": {"metrics": [["传统复水温度与时间", "37°C / 20 min", "S5；以该厂家方案为例"], ["复水用水量", "酵母质量的10倍", "S5；不带保护剂方案"], ["接种前温差", "≤10°C", "S5；逐次加汁降温适应"]], "zh": "按Lallemand传统方案：复水与温度适应总时间不超过45 min。使用酵母保护剂或可直接接种产品时，必须改按相应说明书执行。", "ru": "По традиционному протоколу Lallemand: 37°C, 20 мин, вода в 10-кратном количестве по массе; разница температур перед внесением ≤10°C, общий процесс ≤45 мин. Для защитных препаратов и прямого внесения действуют отдельные инструкции.", "refs": ["S5"]}}, {"title": "酒精发酵", "ruTitle": "Спиртовое брожение", "source": "41—42", "ru": "Дрожжи превращают сахара в этанол и CO₂ с выделением тепла. Ежедневно контролируют температуру, плотность и запах.", "zh": "酵母将糖转化为乙醇与CO₂并放热。每天跟踪温度、密度和气味，防止发酵迟缓、停发或过热。", "zhData": "发酵14—18°C；课件写约4—5天，也可更长。结束以残糖检测为准，不按天数或是否冒泡判断。", "ruData": "14–18°C. В лекции указаны 4–5 суток, возможно дольше. Окончание подтверждают анализом сахаров, а не календарём.", "metrics": [["酒精发酵", "14—18°C", "课件温度"], ["发酵时间", "约4—5天", "课件同时注明可更长"], ["结束确认", "残糖检测", "不只凭天数或气泡"]], "phase": "取汁与酒精发酵", "note": "课件还提及低温可能迟缓、27—30°C会加快发酵并损失香气；这里的目标发酵温度仍为14—18°C。", "supp": {"metrics": [["YAN低风险最低参考", "约150 mg N/L", "S6；白葡萄汁"], ["果香型霞多丽研究参考", "250—350 mg N/L", "S6；不是所有干白的统一目标"]], "zh": "根据初始糖度、菌株和发酵条件决定需氮量，不能一律补到同一数值。发酵温度仍优先记课件14—18°C；4—5天只是该课件方案的时间描述。", "ru": "Потребность в YAN зависит от сахара, штамма и условий. 250–350 мг N/л — ориентир для фруктового профиля, установленный для Chardonnay, а не универсальная норма.", "refs": ["S6"]}}, {"title": "后发酵与细酒泥培养", "ruTitle": "Формирование вина на осадке", "source": "43", "ru": "После сбраживания сахаров вино формируется и самоосветляется. При необходимости проводят батонаж — перемешивание с тонким дрожжевым осадком.", "zh": "糖发酵后，新酒继续形成并自然澄清。按需要进行细酒泥培养和搅拌，利用酵母自溶产物改善丰满度与协调性。", "zhData": "细酒泥可改善丰满度和稳定性；培养时间和搅拌频率取决于风格、容器、氧化还原状态及微生物风险。可用下面的研究方案理解量级，不能机械套用。", "ruData": "Продолжительность контакта и частоту батонажа выбирают по стилю, ёмкости, окислительно-восстановительному состоянию и микробиологическому риску. Исследовательский пример ниже не является обязательным режимом.", "metrics": [["细酒泥培养", "健康细酒泥", "区别于粗酒泥，检查气味与SO₂"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["细酒泥颗粒示意", "1—25 μm", "S13；文献定义"], ["培养实验示例", "16°C / 156天", "S18；模型体系"], ["实验搅拌频率", "每周1次", "S18；与上项同一实验"]], "zh": "研究使用模型酒体系模拟搅拌；156天及每周一次不是工厂通用规定。VT区分：发酵后24 h内沉降的粗酒泥与24 h后沉降的细酒泥；出现还原异味时应及时评估处理。", "ru": "16°C, 156 суток и перемешивание раз в неделю — пример модельного исследования, не универсальная производственная норма. Различают грубый осадок первых 24 ч и более поздний тонкий осадок.", "refs": ["S13", "S18"]}}, {"title": "新酒分析与储存", "ruTitle": "Анализ и хранение молодого вина", "source": "44", "ru": "Определяют спирт, сахара, титруемую и летучую кислотность, железо и SO₂, оценивают органолептику. Ёмкости поддерживают заполненными.", "zh": "检测酒精、糖、可滴定酸、挥发酸、铁、SO₂，并进行感官评价。储存时定期添酒、减少顶空。", "zhData": "储存温度10—12°C。同时关注pH；游离SO₂与总SO₂应分别理解。", "ruData": "Температура хранения 10–12°C. Также контролируют pH; общий SO₂ и свободный SO₂ различают.", "metrics": [["新酒储存", "10—12°C", "定期添酒"], ["质量检测", "酒精 / 糖 / 酸 / SO₂", "同时检查铁和感官"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["游离SO₂参考", "20—30 mg/L", "S16；白酒pH 3.21—3.40时"]], "zh": "该范围是AWRI引用的保护起点，按pH、溶氧、微生物和保存时间修正；不能用成品总SO₂≤200 mg/L代替游离SO₂控制。", "ru": "20–30 мг/л свободного SO₂ — исходный ориентир при pH 3,21–3,40; корректируют по кислороду, микробиологии и сроку хранения.", "refs": ["S16"]}}, {"title": "均质与调配", "ruTitle": "Эгализация и купажирование", "source": "45", "ru": "Эгализация — смешивание партий одного сорта. Купажирование позволяет получить нужный состав и стиль. Сначала проводят анализ и пробное смешивание.", "zh": "均质是混合同品种不同批次；调配用于实现目标成分和风格。先进行分析与小试，再确定比例。", "zhData": "调配比例由分析和品尝确定。酸度、酒精等可做近似体积加权估算，但pH不能直接按比例求平均；两批各自稳定的酒混合后仍需重新做稳定性试验。", "ruData": "Соотношение выбирают пробным купажом. Для спирта и кислотности возможна приближённая оценка по объёмам; pH нельзя просто усреднять. Стабильность проверяют заново.", "metrics": [["调配比例", "小试筛选", "混合后复检酸度、pH与稳定性"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["小试配比示例", "100:0 / 75:25 / 50:50 / 25:75 / 0:100", "教学示例；两批酒体积比例"]], "zh": "这组比例是为了比较的教学设计，并非文献规定剂量。小试方法按Iowa State原则；混合后重新做蛋白和酒石稳定性检测。", "ru": "Эти объёмные соотношения — учебная схема сравнения двух партий, не норматив. После купажа повторно проверяют белковую и тартратную стабильность.", "refs": ["S17", "S8"]}}, {"title": "下胶与蛋白稳定", "ruTitle": "Оклейка и белковая стабилизация", "source": "46", "ru": "Бентонит удаляет нестабильные белки. Желатин и комплексные препараты применяют по задаче. Дозы определяют пробной обработкой.", "zh": "膨润土去除不稳定蛋白；明胶或复合制剂按处理目的选用。通过小试确定剂量，避免过量处理。", "zhData": "课件下胶后静置10—12天，偶尔14天；分离沉淀时补加SO₂ 20 mg/L是该方案的示例，不能固定套用。", "ruData": "После обработки отдых 10–12 суток, иногда 14. Далее в лекции приведено внесение SO₂ 20 мг/л при отделении осадка.", "metrics": [["下胶后静置", "10—12天", "有时14天"], ["分离沉淀时补SO₂", "20 mg/L", "课件此阶段的添加示例"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["膨润土小试梯度", "0.1—1.0 g/L", "S7；相当于10—100 g/hL"], ["小试递增量", "0.1 g/L", "S7；不是每次生产追加量"], ["热试验条件", "80°C / 2 h；室温冷却3 h", "S21；过滤后的实验样品"], ["热试验通过判据", "ΔNTU<2.0", "S21；部分实验室采用<0.5"]], "zh": "取能够通过热稳定试验的最低有效剂量。采用AWRI热试验：过滤后样品80°C加热2 h，再于室温冷却至少3 h，比较浊度；通过判据ΔNTU<2.0，部分实验室用<0.5。下胶后课件静置10—12天与小试澄清时间不是同一概念。", "ru": "Выбирают минимальную эффективную дозу по тепловому тесту. Тепловой тест AWRI: 80°C, 2 ч, затем охлаждение при комнатной температуре не менее 3 ч; критерий ΔNTU<2,0, в некоторых лабораториях <0,5.", "refs": ["S7", "S21"]}}, {"title": "沉淀分离与过滤", "ruTitle": "Отделение осадка и фильтрация", "source": "46—47", "ru": "Отделяют осадок и остатки оклеивающих материалов. Применяют кизельгуровый фильтр, фильтр с пластинами или центробежный сепаратор.", "zh": "分离沉淀与残留下胶材料。课件介绍硅藻土过滤、板式过滤或离心分离。此类澄清过滤不等于最终无菌过滤。", "zhData": "硅藻土、板式过滤和离心的分离机制不同。REDA RE85V是设备型号；滤材的标称截留等级不能当作最终膜的绝对孔径。", "ruData": "REDA RE85V — модель оборудования. Номинальная тонкость глубинной фильтрации не равна абсолютному размеру пор финальной мембраны.", "metrics": [["过滤或分离", "硅藻土 / 板式 / 离心", "去除沉淀与下胶材料"], ["离心设备例子", "REDA RE85V", "不是过滤孔径"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["干酒精滤前浊度参考", "1—3 NTU", "S10；过滤等级选择表"], ["最终膜前浊度目标", "<1 NTU", "S10；减少堵膜"]], "zh": "具体滤材等级应按厂家截留性能和可滤性试验选择，不能只按浊度推定微生物安全。", "ru": "Степень предварительной фильтрации выбирают по фильтруемости и данным производителя. Одна мутность не доказывает микробиологическую стабильность.", "refs": ["S10"]}}, {"title": "陈酿", "ruTitle": "Выдержка вина", "source": "48—49", "ru": "По стилю выбирают короткую или длительную выдержку в резервуарах или бочках. Регулярно проводят доливку.", "zh": "按风格选择短期或长期陈酿，使用罐或桶并定期添酒。并非所有干白都需要长期陈酿。", "zhData": "10—12°C；课件长期方案6个月至2年，从1月1日起计。", "ruData": "10–12°C; длительная выдержка по лекции — 6 месяцев — 2 года, отсчёт с 1 января.", "metrics": [["陈酿温度", "10—12°C", "罐或桶"], ["长期陈酿方案", "6个月—2年", "课件从1月1日起计"]], "phase": "新酒形成与稳定", "note": "6个月至2年属于课件的长期陈酿方案，不能理解为每款干白都必须采用。", "supp": {"metrics": [["陈酿中的游离SO₂", "20—30 mg/L", "S16；仅对应pH 3.21—3.40的起点"]], "zh": "温度沿用课件10—12°C。长期陈酿需要持续监测游离SO₂、挥发酸和气味；保护目标随pH及储藏计划变化。", "ru": "Температура по лекции — 10–12°C. При длительной выдержке контролируют свободный SO₂, летучую кислотность и аромат; ориентир зависит от pH и срока.", "refs": ["S16"]}}, {"title": "陈酿期间倒罐", "ruTitle": "Переливки при выдержке", "source": "49", "ru": "Переливками отделяют осадок. По лекции в начале возможны открытые переливки, к концу — закрытые.", "zh": "倒罐以分离沉淀。课件介绍早期开放式、后期封闭式；实际结合酒的氧化还原状态决定。", "zhData": "课件介绍早期开放式、后期封闭式倒罐。实际应根据沉淀、气味、溶解氧和SO₂决定；果香型干白宜控制吸氧，倒罐前后检测。", "ruData": "Решение о переливке принимают по осадку, аромату, растворённому кислороду и SO₂. Для фруктовых белых вин ограничивают контакт с воздухом.", "metrics": [["课件倒罐方式", "早期开放 / 后期封闭", "实际仍结合氧化还原状态"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["吸氧与SO₂损失关系", "1 mg/L O₂ → 最多约4 mg/L SO₂", "S16；理论关系，不是固定实测损失"]], "zh": "倒罐次数不能由固定日历替代酒况判断；测溶氧和SO₂比硬背“每月几次”更有用。", "ru": "Число переливок определяют по состоянию вина. Теоретически 1 мг/л O₂ может приводить к потере до 4 мг/л SO₂; фактические значения меняются.", "refs": ["S16"]}}, {"title": "酒石稳定与冷处理", "ruTitle": "Тартратная стабилизация холодом", "source": "49及其备注", "ru": "Холод вызывает выпадение гидротартрата калия, снижая риск кристаллов после розлива. Эффект проверяют испытанием.", "zh": "冷却促使酒石酸氢钾析出，降低瓶内结晶风险；通过稳定性试验确认效果。", "zhData": "课件的“至少2天”不是保证稳定的充分条件。生产冷处理按具体方案、酒精度和实际冻结点选温度，处理后须检验。下列生产方案和实验室检验分别记忆。", "ruData": "Указанные в лекции минимум 2 суток не гарантируют стабильность. Температуру выбирают с учётом спирта и точки замерзания; после обработки проводят испытание. Производственный режим и лабораторный тест различают.", "metrics": [["传统冷处理时间", "至少2天", "课件备注"]], "phase": "新酒形成与稳定", "supp": {"metrics": [["生产方案A · 冷冻法", "约−4°C / 约1周", "S8；必须高于该酒实际冻结点"], ["生产方案B · 接触法", "约0°C / 4—8 h", "S8；加KHT约4 g/L并搅拌"], ["实验室冷稳定检验", "−4°C / 3天", "S9；过滤后的样品"]], "zh": "A、B是替代方案。不能只看−4°C机械设温；确认酒精度与冻结风险。检验样品检查酒石晶体，并按所选方法判读；生产处理完成仍需复检。", "ru": "A и B — альтернативные режимы. Температуру не задают механически: учитывают спирт и риск замерзания. После обработки отдельно проверяют стабильность; −4°C/3 суток относится к лабораторному образцу.", "refs": ["S8", "S9"]}}, {"title": "冷过滤", "ruTitle": "Холодная фильтрация", "source": "50", "ru": "После холодной обработки вино фильтруют в холодном состоянии, удаляя выпавшие кристаллы и осадок.", "zh": "冷处理后趁低温过滤，去除析出的晶体和沉淀，避免升温后部分晶体重新溶解。", "zhData": "酒石晶体必须在酒仍处于冷处理温度时分离。这里的冷过滤不同于后续为微生物稳定实施的最终膜过滤。", "ruData": "Кристаллы отделяют при температуре холодной обработки. Эта операция отличается от финальной мембранной фильтрации для микробиологической стабилизации.", "metrics": [["过滤条件", "保持低温", "与冷处理衔接"], ["目的", "分离晶体与沉淀", "避免升温后重新溶解"]], "phase": "装瓶前处理与包装", "supp": {"metrics": [["冷过滤温度衔接", "约−4°C或约0°C", "S8；分别对应前一步A或B方案"]], "zh": "趁冷分离后，再按装瓶前静置要求调温；不要将冷处理温度与最终膜过滤的一般温度混为一谈。", "ru": "Кристаллы отделяют при температуре выбранной холодной обработки; затем переходят к температуре отдыха перед розливом.", "refs": ["S8"]}}, {"title": "装瓶前静置与复检", "ruTitle": "Отдых и контроль перед розливом", "source": "51", "ru": "После холодной фильтрации вино оставляют в заполненных ёмкостях. Проверяют химические показатели, органолептику и стабильность.", "zh": "冷过滤后在满容器中静置，复查理化指标、感官质量和装瓶稳定性。", "zhData": "课件温度10—12°C；未长期陈酿酒至少10天，长期陈酿酒30天。", "ruData": "10–12°C. Без длительной выдержки: минимум 10 суток; после длительной выдержки: 30 суток по лекции.", "metrics": [["静置温度", "10—12°C", "满容器保存"], ["未长期陈酿酒", "至少10天", "课件静置方案"], ["长期陈酿酒", "30天", "课件静置方案"]], "phase": "装瓶前处理与包装", "supp": {"metrics": [["装瓶前浊度", "<1 NTU", "S11；白餐酒参考"], ["挥发酸工艺目标", "<0.8 g/L", "S11；以乙酸计"], ["游离SO₂装瓶参考", "28—32 mg/L", "S11；按pH调整"]], "zh": "这组数值是AWRI列出的典型装瓶参考目标，并非每个市场的法定限值。挥发酸工艺目标低于课件上限1.08 g/L。", "ru": "Это типичные ориентиры AWRI перед розливом, не универсальные правовые пределы. Технологическая цель по летучей кислотности ниже лекционного предела 1,08 г/л.", "refs": ["S11"]}}, {"title": "最终膜过滤", "ruTitle": "Финальная мембранная фильтрация", "source": "51", "ru": "Перед розливом проводят мембранную фильтрацию для микробиологической стабилизации. Важны целостность мембраны и гигиена после фильтра.", "zh": "装瓶前通过膜过滤实现微生物稳定。滤膜完整性及过滤后管线、灌装机卫生同样关键。", "zhData": "课件孔径≤0.6 μm。单凭孔径不能保证去除所有微生物，需验证截留性能与完整性。", "ruData": "На слайде размер пор ≤0,6 мкм. Одного размера пор недостаточно, чтобы гарантировать удаление всех микроорганизмов.", "metrics": [["最终膜孔径", "≤0.6 μm", "课件数值"], ["效果确认", "截留性能与完整性", "孔径本身不保证无菌"]], "phase": "装瓶前处理与包装", "supp": {"metrics": [["最终绝对膜常见选择", "0.45 μm", "S10；微生物稳定"], ["一般膜过滤温度", "15—21°C", "S10；不适用于前一步分离酒石晶体"]], "zh": "保留课件≤0.6 μm，并补充0.45 μm常见选择。须核对目标微生物截留率、滤膜完整性和下游卫生；最终膜过滤后直接衔接装瓶。", "ru": "Лекционное значение ≤0,6 мкм сохранено; распространённый выбор — абсолютная мембрана 0,45 мкм. Проверяют удержание микроорганизмов и целостность; после фильтрации сразу разливают.", "refs": ["S10"]}}, {"title": "灌装封口与包装", "ruTitle": "Розлив укупорка и упаковка", "source": "52", "ru": "Вино разливают в подготовленную тару, укупоривают, проверяют уровень и герметичность. Наносят этикетки и маркировку, затем упаковывают.", "zh": "将酒灌入准备好的容器，封口，检查液位和密封性，贴标签、标识并装箱；全过程控制卫生与吸氧。", "zhData": "课件对该类酒推荐玻璃瓶；也提及普通酒的其他包装及1.5、3、5 L规格，这些容量不是质量指标。", "ruData": "Для рассматриваемых вин рекомендованы стеклянные бутылки. Упомянуты альтернативные упаковки 1,5; 3; 5 л для простых вин.", "metrics": [["容器", "玻璃瓶", "课件对该类酒的推荐"], ["装瓶重点", "卫生、液位与密封", "贴标、批号与装箱"]], "phase": "装瓶前处理与包装", "supp": {"metrics": [["装瓶前溶解氧", "<0.5 mg/L", "S12；控制氧化"], ["溶解CO₂", "0.8—1.2 g/L", "S11；白餐酒风格参考"], ["金属稳定筛查", "Cu<0.50；Ca<80 mg/L", "S11；装瓶前参考"]], "zh": "CO₂按酒体和风格调整，不是所有干白都必须保留同样含量；同时检查液位、封口、微生物和批次标识。", "ru": "CO₂ корректируют по стилю и структуре. Дополнительно проверяют уровень налива, укупорку, микробиологию и маркировку партии.", "refs": ["S11", "S12"]}}]</script>
+    <script id="ww-param-data" type="application/json">[["原料糖分", "≥150 g/L", "PPT 11", "原料表普通酿酒用途最低值；不是所有干白的最佳采收目标。"], ["原料可滴定酸", "≥6.0 g/L", "PPT 11", "以酒石酸计，表中有特定用途例外。"], ["代表性样品", "≥3 / ≥6 kg", "PPT 29", "分别为无品种混杂、有品种混杂的取样。"], ["原料预冷", "0—2°C", "PPT 29", "课件对高温原料的预冷方案。"], ["接料斗停留", "≤30 min", "PPT 31", "避免原料长时间堆积。"], ["常规浸渍", "2—4 h", "PPT 35", "按需要用于芳香型品种。"], ["低温浸渍方案一", "0—2°C / 10—12 h", "PPT 35", "与其他方案分开记忆。"], ["低温浸渍方案二", "约5°C / 16 h", "PPT 35", "另一冷浸方案。"], ["果胶酶", "2—4 g/100 kg", "PPT 35", "按葡萄质量计，具体制剂按说明。"], ["自流汁量", "约55 daL/t", "PPT 36", "相当于550 L/t。"], ["自流汁与第一压榨级分", "约60 daL/t", "PPT 36", "合计约600 L/t；不是所有设备的固定出汁率。"], ["活性干酵母", "20—40 g/100 L", "PPT 42", "复水和接种条件按具体产品说明。"], ["酒精发酵温度", "14—18°C", "PPT 42", "对应课件的干白发酵方案。"], ["酒精发酵时间", "约4—5天，可更长", "PPT 42", "以残糖分析和发酵状态确认结束。"], ["新酒储存温度", "10—12°C", "PPT 44", "定期添酒，减少不必要的顶空。"], ["下胶后静置", "10—12天，有时14天", "PPT 46", "随后分离沉淀。"], ["分离沉淀阶段补SO₂", "20 mg/L", "PPT 46", "课件此阶段的添加示例，不是总SO₂含量或统一剂量。"], ["长期陈酿温度", "10—12°C", "PPT 48", "按风格采用罐或桶。"], ["长期陈酿时间", "6个月—2年", "PPT 49", "课件从1月1日起计；非所有干白必用。"], ["传统冷处理时间", "至少2天", "PPT 49备注", "课件至少2天；另见补充生产方案与检验条件，不能仅以天数判定稳定。"], ["装瓶前静置温度", "10—12°C", "PPT 51", "满容器中静置。"], ["装瓶前静置时间", "至少10天 / 30天", "PPT 51", "分别对应未长期陈酿酒与长期陈酿酒。"], ["最终膜孔径", "≤0.6 μm", "PPT 51", "还需验证滤膜完整性、截留性能和下游卫生。"], ["成品酒精度", "≥9 / ≥10 / ≥11 % vol", "PPT 10", "依次为无陈酿、陈酿、课件所述DOP/IGP酒的分类数值。"], ["成品残糖", "≤4 g/L", "PPT 10", "课件的干型基本值。"], ["成品可滴定酸", "≥4.0 g/L；参考4—8", "PPT 10", "以酒石酸计；4—8 g/L是课件参考范围。"], ["成品挥发酸", "≤1.08 g/L", "PPT 10", "以乙酸计；上限不是理想生产目标。"], ["成品总SO₂", "≤200 mg/L", "PPT 10", "游离SO₂与结合SO₂之和。"], ["成品pH", "3.2—3.3", "PPT 10", "课件目标区间，不当作所有干白的统一要求。"], ["非还原性干浸出物", "≥15 g/L", "PPT 10", "不能只凭浸出物高低判断质量。"], ["成品铁 · 补充稳定性参考", "约5—6 mg/L以下", "S1", "AWRI列出避免不稳定的参考上边界约5—6 mg/L；≥10 mg/L可有金属味。不是通用法定限值；课件10/14的原意不能由外部资料确定。"], ["采收 · 白葡萄采收糖度", "18—24 °Bx", "S14", "补充参考 S14；随品种与风格调整；补充参考；适用条件见流程说明。"], ["接收与检验 · 接种前氮营养筛查", "约150 mg N/L", "S6", "S6：白葡萄汁低风险发酵最低需求参考；补充参考；适用条件见流程说明。"], ["亚硫酸化 · 发酵前SO₂添加", "30—60 mg/L", "S2", "S2；相当于3—6 g/hL纯SO₂；补充参考；适用条件见流程说明。"], ["自流汁分离与压榨 · 气囊压榨程序示例", "每级+0.2 bar；最高2 bar", "S15", "S15：特定酒庄设备程序；补充参考；适用条件见流程说明。"], ["葡萄汁澄清与除泥 · 澄清后浊度", "约50—200 NTU", "S3 / S4 / S19", "S3；按目标香气选择；补充参考；适用条件见流程说明。"], ["葡萄汁澄清与除泥 · 静置沉降时间", "12—24 h", "S3 / S4 / S19", "S4；静态澄清实践；补充参考；适用条件见流程说明。"], ["葡萄汁澄清与除泥 · 低温澄清实验参考", "10°C", "S3 / S4 / S19", "S19；研究条件；补充参考；适用条件见流程说明。"], ["酵母接种 · 传统复水温度与时间", "37°C / 20 min", "S5", "S5；以该厂家方案为例；补充参考；适用条件见流程说明。"], ["酵母接种 · 复水用水量", "酵母质量的10倍", "S5", "S5；不带保护剂方案；补充参考；适用条件见流程说明。"], ["酵母接种 · 接种前温差", "≤10°C", "S5", "S5；逐次加汁降温适应；补充参考；适用条件见流程说明。"], ["酒精发酵 · YAN低风险最低参考", "约150 mg N/L", "S6", "S6；白葡萄汁；补充参考；适用条件见流程说明。"], ["酒精发酵 · 果香型霞多丽研究参考", "250—350 mg N/L", "S6", "S6；不是所有干白的统一目标；补充参考；适用条件见流程说明。"], ["后发酵与细酒泥培养 · 细酒泥颗粒示意", "1—25 μm", "S13 / S18", "S13；文献定义；补充参考；适用条件见流程说明。"], ["后发酵与细酒泥培养 · 培养实验示例", "16°C / 156天", "S13 / S18", "S18；模型体系；补充参考；适用条件见流程说明。"], ["后发酵与细酒泥培养 · 实验搅拌频率", "每周1次", "S13 / S18", "S18；与上项同一实验；补充参考；适用条件见流程说明。"], ["新酒分析与储存 · 游离SO₂参考", "20—30 mg/L", "S16", "S16；白酒pH 3.21—3.40时；补充参考；适用条件见流程说明。"], ["均质与调配 · 小试配比示例", "100:0 / 75:25 / 50:50 / 25:75 / 0:100", "S17 / S8", "教学示例；两批酒体积比例；教学设计，非标准要求。"], ["下胶与蛋白稳定 · 膨润土小试梯度", "0.1—1.0 g/L", "S7 / S21", "S7；相当于10—100 g/hL；补充参考；适用条件见流程说明。"], ["下胶与蛋白稳定 · 小试递增量", "0.1 g/L", "S7 / S21", "S7；不是每次生产追加量；补充参考；适用条件见流程说明。"], ["下胶与蛋白稳定 · 热试验条件", "80°C / 2 h；室温冷却3 h", "S7 / S21", "S21；过滤后的实验样品；补充参考；适用条件见流程说明。"], ["下胶与蛋白稳定 · 热试验通过判据", "ΔNTU<2.0", "S7 / S21", "S21；部分实验室采用<0.5；补充参考；适用条件见流程说明。"], ["沉淀分离与过滤 · 干酒精滤前浊度参考", "1—3 NTU", "S10", "S10；过滤等级选择表；补充参考；适用条件见流程说明。"], ["沉淀分离与过滤 · 最终膜前浊度目标", "<1 NTU", "S10", "S10；减少堵膜；补充参考；适用条件见流程说明。"], ["陈酿 · 陈酿中的游离SO₂", "20—30 mg/L", "S16", "S16；仅对应pH 3.21—3.40的起点；补充参考；适用条件见流程说明。"], ["陈酿期间倒罐 · 吸氧与SO₂损失关系", "1 mg/L O₂ → 最多约4 mg/L SO₂", "S16", "S16；理论关系，不是固定实测损失；补充参考；适用条件见流程说明。"], ["酒石稳定与冷处理 · 生产方案A · 冷冻法", "约−4°C / 约1周", "S8 / S9", "S8；必须高于该酒实际冻结点；补充参考；适用条件见流程说明。"], ["酒石稳定与冷处理 · 生产方案B · 接触法", "约0°C / 4—8 h", "S8 / S9", "S8；加KHT约4 g/L并搅拌；补充参考；适用条件见流程说明。"], ["酒石稳定与冷处理 · 实验室冷稳定检验", "−4°C / 3天", "S8 / S9", "S9；过滤后的样品；补充参考；适用条件见流程说明。"], ["冷过滤 · 冷过滤温度衔接", "约−4°C或约0°C", "S8", "S8；分别对应前一步A或B方案；补充参考；适用条件见流程说明。"], ["装瓶前静置与复检 · 装瓶前浊度", "<1 NTU", "S11", "S11；白餐酒参考；补充参考；适用条件见流程说明。"], ["装瓶前静置与复检 · 挥发酸工艺目标", "<0.8 g/L", "S11", "S11；以乙酸计；补充参考；适用条件见流程说明。"], ["装瓶前静置与复检 · 游离SO₂装瓶参考", "28—32 mg/L", "S11", "S11；按pH调整；补充参考；适用条件见流程说明。"], ["最终膜过滤 · 最终绝对膜常见选择", "0.45 μm", "S10", "S10；微生物稳定；补充参考；适用条件见流程说明。"], ["最终膜过滤 · 一般膜过滤温度", "15—21°C", "S10", "S10；不适用于前一步分离酒石晶体；补充参考；适用条件见流程说明。"], ["灌装封口与包装 · 装瓶前溶解氧", "<0.5 mg/L", "S11 / S12", "S12；控制氧化；补充参考；适用条件见流程说明。"], ["灌装封口与包装 · 溶解CO₂", "0.8—1.2 g/L", "S11 / S12", "S11；白餐酒风格参考；补充参考；适用条件见流程说明。"], ["灌装封口与包装 · 金属稳定筛查", "Cu<0.50；Ca<80 mg/L", "S11 / S12", "S11；装瓶前参考；补充参考；适用条件见流程说明。"]]</script>
   </section>
 
   <!-- ==================== 视图 4：云端同步设置与三步上线指南 ==================== -->
@@ -869,7 +1453,7 @@ $('inlineConfirmNo').addEventListener('click', () => {
 // ============================================================================
 // 视图路由切换
 // ============================================================================
-const VIEWS = ['hub', 'recite', 'cloze', 'cloud'];
+const VIEWS = ['hub', 'recite', 'cloze', 'wine', 'cloud'];
 function switchView(target) {
   $('inlineConfirm').hidden = true;
   VIEWS.forEach(v => {
@@ -887,9 +1471,11 @@ function switchView(target) {
 $('nav-hub').addEventListener('click', () => switchView('hub'));
 $('nav-recite').addEventListener('click', () => switchView('recite'));
 $('nav-cloze').addEventListener('click', () => switchView('cloze'));
+$('nav-wine').addEventListener('click', () => switchView('wine'));
 $('nav-cloud').addEventListener('click', () => switchView('cloud'));
 $('openReciteBtn').addEventListener('click', () => switchView('recite'));
 $('openClozeBtn').addEventListener('click', () => switchView('cloze'));
+$('openWineBtn').addEventListener('click', () => switchView('wine'));
 $('openCloudBtn').addEventListener('click', () => switchView('cloud'));
 $('syncStatusBtn').addEventListener('click', () => switchView('cloud'));
 
@@ -906,7 +1492,8 @@ const MANAGED_KEYS = [
   'neo-russian-recall-v1-draft',
   'neo-word-cloze-v1',
   'neo-word-cloze-v1-history',
-  'neo-word-cloze-v1-draft'
+  'neo-word-cloze-v1-draft',
+  'neo-white-wine-v1'
 ];
 
 function safeGet(k) {
@@ -944,11 +1531,14 @@ function markLocalChanged() {
   saveSyncMeta(m);
   safeSet(SYNC_DIRTY_KEY, '1');
   refreshHubMetrics();
-
-  setSyncBadge(
-    navigator.onLine ? 'dirty' : 'offline',
-    '已保存到本机 · 点击立即同步'
-  );
+  const cfg = loadSyncCfg();
+  if (cfg.apiKey && cfg.url) {
+    setSyncBadge('dirty', '本地已存 · 准备同步…');
+    clearTimeout(syncDebounce);
+    syncDebounce = setTimeout(() => syncWithCloud('auto'), 1600);
+  } else {
+    setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地已自动保存' : '离线背诵中（本地已存）');
+  }
 }
 
 function collectAllStudyData() {
@@ -969,6 +1559,7 @@ function applyAllStudyData(dataObj) {
   });
   reloadReciteFromStorage();
   reloadClozeFromStorage();
+  if (typeof window.reloadWineFromStorage === 'function') window.reloadWineFromStorage();
   refreshHubMetrics();
 }
 
@@ -1032,9 +1623,6 @@ async function cloudPush(cfg, payload) {
 
 let isSyncing = false;
 async function syncWithCloud(mode) {
-    if (mode !== 'manual' &&
-      mode !== 'force-pull' &&
-      mode !== 'force-push') return;
   const cfg = loadSyncCfg();
   if (!cfg.apiKey || !cfg.url) {
     setSyncBadge(navigator.onLine ? 'local' : 'offline', navigator.onLine ? '本地秒存 · 点击配置云端' : '离线模式 · 本地已保存');
@@ -1119,8 +1707,8 @@ $('cfg-saveBtn').addEventListener('click', () => {
     syncId: $('cfg-syncId').value.trim() || 'my-russian-study'
   };
   saveSyncCfg(cfg);
-  $('cfg-statusMsg').textContent =
-    '配置已保存。点击顶部“立即同步”才会连接云端。';
+  $('cfg-statusMsg').textContent = '配置已保存，正在执行首次同步…';
+  syncWithCloud('manual');
 });
 $('cfg-pullBtn').addEventListener('click', () => syncWithCloud('force-pull'));
 $('cfg-pushBtn').addEventListener('click', () => syncWithCloud('force-push'));
@@ -1910,6 +2498,170 @@ window.addEventListener('offline', () => setSyncBadge('offline', '离线背诵�
 })();
 
 // ============================================================================
+
+// ============================================================================
+// 工具 03：白葡萄酒 · 酿造手记 (White_Wine_Guide) 完整逻辑 + 跨设备阅读进度同步
+// ============================================================================
+(function initWhiteWineTool(){
+  const WINE_KEY = 'neo-white-wine-v1';
+  const sources = JSON.parse($('ww-source-data').textContent);
+  const data = JSON.parse($('ww-step-data').textContent);
+  const rows = JSON.parse($('ww-param-data').textContent);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const num = i => String(i + 1).padStart(2, '0');
+  let current = 0;
+  let allMode = false;
+  let showRu = false;
+
+  function saveWineState() {
+    if (safeSet(WINE_KEY, JSON.stringify({ step: current, allMode, showRu }))) {
+      markLocalChanged();
+    }
+  }
+
+  function refs(ids) {
+    return ids.map(id => `<a href="#ww-ref-${esc(id)}">${esc(id)}</a>`).join(' · ');
+  }
+  function supplement(d) {
+    if (!d.supp) return '';
+    const s = d.supp;
+    return `<section class="ww-supplement"><h4>查证补充 <span>参考范围与适用条件</span></h4>${s.metrics.length ? `<div class="ww-metrics">${s.metrics.map(m => `<div class="ww-metric"><span>${esc(m[0])}</span><strong>${esc(m[1])}</strong><small>${esc(m[2])}</small></div>`).join('')}</div>` : ''}<p>${esc(s.zh)}</p><p class="ww-russian">${esc(s.ru)}</p><div class="ww-refline">来源 · ${refs(s.refs)}</div></section>`;
+  }
+
+  $('ww-references').innerHTML = sources.map(s => `<a id="ww-ref-${esc(s[0])}" href="${esc(s[2])}" target="_blank" rel="noopener"><b>${esc(s[0])}</b> ${esc(s[1])} ↗<span>查询补充 · 点击查看原文</span></a>`).join('');
+
+  function renderStep() {
+    const d = data[current];
+    $('ww-steps').querySelectorAll('.ww-step').forEach((b, i) => b.setAttribute('aria-current', i === current ? 'step' : 'false'));
+    $('ww-stepselect').value = current;
+    $('ww-detail').innerHTML = `
+      <div class="ww-detailhead">
+        <span class="ww-kicker">${esc(d.phase)} · PPT ${esc(d.source)}</span>
+        <span class="ww-position">${num(current)}<small> / 23</small></span>
+      </div>
+      <h3>${esc(d.title)}</h3>
+      <div class="ww-russian">${esc(d.ruTitle)}</div>
+      <p class="ww-summary">${esc(d.zh)}</p>
+      <p class="ww-russian">${esc(d.ru)}</p>
+      <div class="ww-metrics">${d.metrics.map(m => `<div class="ww-metric"><span>${esc(m[0])}</span><strong>${esc(m[1])}</strong><small>${esc(m[2])}</small></div>`).join('')}</div>
+      <div class="ww-datanote">
+        <h4>课件笔记与工艺重点</h4>
+        <p>${esc(d.zhData)}</p>
+        <p class="ww-russian">${esc(d.ruData)}</p>
+      </div>
+      ${d.note ? `<p class="ww-source-note">${esc(d.note)}</p>` : ''}
+      ${supplement(d)}
+      <div class="ww-detailfoot">
+        <span>课件定位 · 第${esc(d.source)}页</span>
+        <div class="ww-arrows">
+          <button type="button" id="ww-prev" aria-label="上一个环节" ${current === 0 ? 'disabled' : ''}>←</button>
+          <button type="button" id="ww-next" aria-label="下一个环节" ${current === data.length - 1 ? 'disabled' : ''}>→</button>
+        </div>
+      </div>`;
+    $('ww-prev').onclick = () => selectStep(current - 1, true);
+    $('ww-next').onclick = () => selectStep(current + 1, true);
+  }
+
+  function selectStep(i, persist) {
+    current = Math.max(0, Math.min(data.length - 1, Number(i)));
+    renderStep();
+    const btns = $('ww-steps').querySelectorAll('.ww-step');
+    if (btns[current]) btns[current].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    if (persist) saveWineState();
+  }
+
+  let phase = '';
+  data.forEach((d, i) => {
+    if (d.phase !== phase) {
+      phase = d.phase;
+      $('ww-steps').insertAdjacentHTML('beforeend', `<div class="ww-phase">${esc(phase)}</div>`);
+    }
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ww-step';
+    b.innerHTML = `<span>${num(i)}</span>${esc(d.title)}`;
+    b.onclick = () => selectStep(i, true);
+    $('ww-steps').append(b);
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = `${num(i)}  ${d.title}`;
+    $('ww-stepselect').append(o);
+  });
+  $('ww-stepselect').onchange = e => selectStep(e.target.value, true);
+
+  $('ww-allview').innerHTML = data.map((d, i) => `
+    <article class="ww-chapter">
+      <span>${num(i)}</span>
+      <div>
+        <h3>${esc(d.title)}</h3>
+        <p class="ww-russian">${esc(d.ruTitle)} · ${esc(d.ru)}</p>
+        <p>${esc(d.zh)}</p>
+        <p class="ww-numbers">${d.metrics.map(m => `${esc(m[0])}：${esc(m[1])}（${esc(m[2])}）`).join('；')}</p>
+        <p>${esc(d.zhData)}</p>
+        <p class="ww-russian">${esc(d.ruData)}</p>
+        ${d.note ? `<p>${esc(d.note)}</p>` : ''}
+        <p class="ww-source">PPT第${esc(d.source)}页</p>
+        ${supplement(d)}
+      </div>
+    </article>`).join('');
+
+  function applyMode(all, persist) {
+    allMode = Boolean(all);
+    $('ww-reader').hidden = allMode;
+    $('ww-allview').hidden = !allMode;
+    $('ww-focusmode').setAttribute('aria-pressed', String(!allMode));
+    $('ww-allmode').setAttribute('aria-pressed', String(allMode));
+    if (persist) saveWineState();
+  }
+  $('ww-focusmode').onclick = () => applyMode(false, true);
+  $('ww-allmode').onclick = () => applyMode(true, true);
+
+  function applyLang(on, persist) {
+    showRu = Boolean(on);
+    $('view-wine').classList.toggle('show-ru', showRu);
+    $('ww-language').setAttribute('aria-pressed', String(showRu));
+    $('ww-language').textContent = showRu ? '隐藏俄语对照' : '显示俄语对照';
+    if (persist) saveWineState();
+  }
+  $('ww-language').onclick = () => applyLang(!showRu, true);
+
+  function renderTable(q = '') {
+    const found = rows.filter(r => r.join(' ').toLowerCase().includes(q.trim().toLowerCase()));
+    $('ww-tbody').innerHTML = found.map(r => `<tr>${r.map((c, i) => `<td>${i === 2 && /^S\d/.test(c) ? refs(c.split(' / ')) : esc(c)}</td>`).join('')}</tr>`).join('');
+    $('ww-empty').hidden = found.length > 0;
+  }
+  $('ww-search').oninput = e => renderTable(e.target.value);
+  $('ww-print').onclick = () => window.print();
+
+  $('ww-jump-process').onclick = () => $('ww-process').scrollIntoView({ behavior: 'smooth' });
+  $('ww-jump-params').onclick = () => $('ww-parameters').scrollIntoView({ behavior: 'smooth' });
+  $('ww-jump-sensory').onclick = () => $('ww-sensory').scrollIntoView({ behavior: 'smooth' });
+  $('ww-jump-sources').onclick = () => $('ww-sources').scrollIntoView({ behavior: 'smooth' });
+
+  window.reloadWineFromStorage = function() {
+    try {
+      const ws = JSON.parse(safeGet(WINE_KEY));
+      if (ws) {
+        if (typeof ws.step === 'number') current = Math.max(0, Math.min(data.length - 1, ws.step));
+        applyMode(Boolean(ws.allMode), false);
+        applyLang(Boolean(ws.showRu), false);
+      }
+    } catch {}
+    renderStep();
+    renderTable($('ww-search').value);
+  };
+
+  window.getWineMetrics = function() {
+    return {
+      stepNum: num(current),
+      stepTitle: data[current] ? data[current].title : '采收',
+      showRu
+    };
+  };
+
+  window.reloadWineFromStorage();
+})();
+
 // 刷新主页仪表盘统计卡片
 // ============================================================================
 function refreshHubMetrics() {
@@ -1924,6 +2676,11 @@ function refreshHubMetrics() {
     $('hub-word-done').textContent = c.done + ' / 35';
     $('hub-word-count').textContent = c.words + ' 词';
     $('hub-word-hist').textContent = c.hist + ' 词';
+  }
+  if (typeof window.getWineMetrics === 'function') {
+    const w = window.getWineMetrics();
+    $('hub-wine-step').textContent = w.stepNum + ' · ' + w.stepTitle.slice(0, 4);
+    $('hub-wine-lang').textContent = w.showRu ? '中俄双语' : '中文模式';
   }
   const cfg = loadSyncCfg();
   const meta = loadSyncMeta();
